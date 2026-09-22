@@ -575,6 +575,39 @@
       submitBtn.textContent = 'Send message';
     }
   });
+
+  // Live, honest pilot stats -- all-time only, never a weekly/rate figure (a small weekly
+  // number reads as "nobody uses this"; an all-time total doesn't). Rating stays hidden
+  // until it clears BOTH a score floor and a sample-size floor, so a tiny, easily-skewed
+  // sample never gets displayed as if it were a stable fact.
+  (async function loadPilotStats() {
+    try {
+      var res = await fetch(SUPABASE_URL + '/rest/v1/public_site_stats?select=*', {
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY },
+      });
+      if (!res.ok) return;
+      var rows = await res.json();
+      var stats = rows[0];
+      if (!stats) return;
+
+      var deedsEl = document.getElementById('pilot-stat');
+      if (deedsEl && stats.total_deeds > 0) {
+        deedsEl.textContent = stats.total_deeds.toLocaleString() + ' good deeds logged so far — join the pilot.';
+        deedsEl.style.display = '';
+      }
+
+      var ratingEl = document.getElementById('rating-stat');
+      var RATING_MIN_SCORE = 4.0;
+      var RATING_MIN_REVIEWS = 10;
+      if (ratingEl && stats.avg_rating >= RATING_MIN_SCORE && stats.review_count >= RATING_MIN_REVIEWS) {
+        ratingEl.textContent = stats.avg_rating.toFixed(1) + '★ · ' + stats.review_count.toLocaleString() + ' reviews';
+        ratingEl.style.display = '';
+      }
+    } catch (err) {
+      // Fails silently -- these are enhancements, not core functionality; the download
+      // flow must never depend on this request succeeding.
+    }
+  })();
 })();
 </script>
 
