@@ -105,10 +105,15 @@
     border: 1px solid var(--line); color: var(--text); font-weight: 700; font-size: 15px;
     padding: 14px 26px; border-radius: 100px; text-decoration: none;
   }
+  .btn-text {
+    color: var(--text-soft); font-weight: 600; font-size: 14px;
+    text-decoration: underline; text-underline-offset: 3px; padding: 8px 2px;
+  }
+  .btn-text:hover { color: var(--text); }
 
   .hero-mascot { position: relative; display: flex; justify-content: center; }
   .hero-mascot img.main-visual {
-    width: 400px; max-width: 92%; filter: drop-shadow(0 24px 44px rgba(0,0,0,0.5));
+    width: 460px; max-width: 96%; filter: drop-shadow(0 24px 44px rgba(0,0,0,0.5));
   }
   @keyframes bounce-icon {
     0%, 100% { transform: translateY(0) rotate(-4deg); }
@@ -331,7 +336,7 @@
     .hero p.lead { margin-left: auto; margin-right: auto; }
     .cta-row { justify-content: center; }
     .hero-mascot { order: -1; margin-bottom: 6px; }
-    .hero-mascot img.main-visual { width: 280px; }
+    .hero-mascot img.main-visual { width: 330px; }
     .floating-logo { width: 68px; height: 68px; border-radius: 18px; top: -4%; right: 10%; }
     .grid-4 { grid-template-columns: repeat(2, 1fr); gap: 14px; }
     .grid-5 { grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -368,9 +373,9 @@
       <span class="eyebrow">🇵🇰 Made for Pakistan's good-doers</span>
       <h1>Do something good.<br>Get <span>seen</span> for it.</h1>
       <p class="lead">Log small civic acts — cleaning up litter, feeding strays, watering a plant — earn points, and climb the weekly leaderboard. Guddi's cheering you on the whole way.</p>
-      <div class="cta-row">
+      <div class="cta-row" style="align-items:center;">
         <a class="btn-primary" href="#download">⬇ Download the app</a>
-        <a class="btn-ghost" href="#guddi">Meet Guddi</a>
+        <a class="btn-text" href="#guddi">Meet Guddi</a>
       </div>
     </div>
     <div class="hero-mascot">
@@ -500,6 +505,8 @@
         <a class="btn-primary" href="https://github.com/musaibnhaseeb-source/acha-karo-releases/releases/download/prod1/app-release.apk">⬇ Get the APK</a>
         <a class="btn-ghost" href="https://acha-karo-pwa.vercel.app">🍎 Use on iPhone (Web)</a>
       </div>
+      <p id="pilot-stat" class="disclaimer" style="border-left-color: var(--mint); display:none;"></p>
+      <p id="rating-stat" class="disclaimer" style="border-left-color: var(--teal); display:none;"></p>
       <ol class="steps">
         <li>Tap the download button above to get the latest APK file.</li>
         <li>Open your downloaded file from your notifications or Downloads folder.</li>
@@ -507,7 +514,7 @@
         <li>Tap Install and wait a few seconds.</li>
         <li>Open Acha Karo and start logging good deeds!</li>
       </ol>
-      <p class="disclaimer">Android may show a warning about installing from an unknown source since this isn't from the Play Store — this is expected and safe. Just allow the permission when asked.</p>
+      <p class="disclaimer">Like any app installed outside the Play Store, Android will ask you to confirm once. Tap "Install anyway" to continue.</p>
       <p class="disclaimer">On iPhone? Tap "Use on iPhone (Web)" above instead — it opens the same app right in your browser.</p>
     </div>
     <img class="corner-mascot" src="assets/guddi-action-phone.png" alt="" />
