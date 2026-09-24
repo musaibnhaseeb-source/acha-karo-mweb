@@ -9,15 +9,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Mirza:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
+    color-scheme: dark;
     --bg: #071b11;
     --card: #0f2d1c;
     --card-strong: #143823;
     --line: rgba(246, 245, 236, 0.14);
     --text: #f6f5ec;
-    --text-soft: rgba(246, 245, 236, 0.68);
+    --text-soft: rgba(246, 245, 236, 0.72);
     --gold: #e0b23d;
     --mint: #8bc34a;
     --ink-on-gold: #16301f;
+    --warn-line: rgba(224, 178, 61, 0.55);
+    --mark: rgba(224, 178, 61, 0.35);
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -26,9 +29,11 @@
     background: var(--bg);
     color: var(--text);
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
     overflow-x: hidden;
   }
-  a { color: inherit; }
+  a { color: var(--gold); font-weight: 700; }
 
   header {
     display: flex;
@@ -60,119 +65,103 @@
   }
   h1 { font-size: 38px; line-height: 1.15; margin: 0 0 14px; }
   h1 span { color: var(--gold); }
-  .lead { font-size: 16px; color: var(--text-soft); line-height: 1.6; margin: 0 0 22px; }
+  .lead { font-size: 16px; color: var(--text-soft); line-height: 1.6; margin: 0 0 22px; max-width: 62ch; }
 
-  .jump { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 34px; }
-  .jump a {
-    font-size: 13px; font-weight: 700; text-decoration: none;
-    border: 1px solid var(--line); border-radius: 100px; padding: 7px 14px;
-  }
-  .jump a:hover { border-color: var(--gold); color: var(--gold); }
-
-  .part-title { font-size: 26px; margin: 40px 0 6px; scroll-margin-top: 16px; }
-  .part-sub { font-size: 14.5px; color: var(--text-soft); margin: 0 0 18px; }
-  .group-title { font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--mint); margin: 26px 0 12px; }
-  .faq-group { scroll-margin-top: 16px; }
-
-  /* FAQ search: filters cards in the page only */
-  .faq-search { margin: 14px 0 6px; }
-  .faq-search input {
-    width: 100%;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 100px;
-    padding: 13px 18px;
-    color: var(--text);
-    font-size: 16px; /* 16px stops iOS Safari zooming in on focus */
-    font-family: inherit;
-    outline: none;
-  }
-  .faq-search input:focus { border-color: var(--gold); }
-  .faq-search input::placeholder { color: var(--text-soft); }
-  .faq-count { font-size: 13px; color: var(--text-soft); margin: 0 0 12px; min-height: 1em; }
-  .faq-jump { margin-bottom: 10px; }
+  /* FAQ search: filters the questions on this page only */
+  .search { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 10px; }
   .visually-hidden {
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
     overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
   }
-
-  .rule-card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    padding: 22px 24px;
-    margin-bottom: 16px;
+  .search input {
+    width: 100%; font: inherit; font-size: 16px; /* 16px stops iOS Safari zooming in on focus */
+    color: var(--text);
+    background: var(--card); border: 1.5px solid var(--line); border-radius: 14px;
+    padding: 13px 16px 13px 44px; outline: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23e0b23d' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: 15px center;
   }
-  .rule-card h2, .rule-card h3 { font-size: 18px; margin: 0 0 10px; color: var(--gold); }
-  .rule-card p, .rule-card li { font-size: 14.5px; line-height: 1.65; color: var(--text-soft); }
-  .rule-card p { margin: 0 0 10px; }
-  .rule-card p:last-child { margin-bottom: 0; }
-  .rule-card ul, .rule-card ol { margin: 0; padding-left: 20px; }
-  .rule-card li { margin-bottom: 6px; }
-  .rule-card strong { color: var(--text); }
+  .search input:focus { border-color: var(--gold); }
+  .search input::placeholder { color: var(--text-soft); }
+  .search-meta { font-size: 13px; color: var(--text-soft); margin-top: 6px; min-height: 1.2em; }
 
-  /* open questions that Musa still has to answer -- must be resolved before this page ships */
-  .placeholder {
-    display: inline-block;
-    color: var(--gold);
-    font-weight: 700;
-    font-size: 13px;
-    border: 1px dashed rgba(224, 178, 61, 0.7);
-    border-radius: 8px;
-    padding: 2px 8px;
-    max-width: 100%;
-  }
-  .rule-card code {
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 26px; }
+  .chips a { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--text); border: 1px solid var(--line); border-radius: 100px; padding: 5px 12px; }
+  .chips a:hover, .chips a:focus-visible { border-color: var(--gold); color: var(--gold); }
+
+  .faq-section { margin-bottom: 30px; scroll-margin-top: 90px; }
+  .faq-section > h2 { font-size: 20px; color: var(--gold); margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
+  .qa { background: var(--card); border: 1px solid var(--line); border-radius: 14px; margin-bottom: 8px; scroll-margin-top: 90px; }
+  .qa summary { cursor: pointer; list-style: none; padding: 14px 44px 14px 18px; font-weight: 700; position: relative; }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary::after { content: "+"; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 20px; font-weight: 400; }
+  .qa[open] summary::after { content: "–"; }
+  .qa summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 14px; }
+  .qa .a { padding: 0 18px 16px; color: var(--text-soft); }
+  .qa .a p { margin: 0 0 8px; }
+  .qa .a p:last-child { margin-bottom: 0; }
+  .qa .a ul, .qa .a ol { margin: 0 0 8px; padding-left: 20px; }
+  .qa .a li { margin-bottom: 4px; }
+  .qa .a strong { color: var(--text); }
+  .qa code {
     font-size: 12.5px; background: rgba(246,245,236,0.08); border-radius: 6px;
     padding: 1px 6px; color: var(--text); word-break: break-all;
   }
+  mark { background: var(--mark); color: var(--text); border-radius: 3px; padding: 0 2px; }
+
+  /* open items that must be filled in before this page ships */
+  .ph { background: rgba(224,178,61,0.18); border: 1px dashed var(--warn-line); color: var(--gold); border-radius: 6px; padding: 0 6px; font-size: 13px; font-weight: 600; }
+
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin: 4px 0 10px; padding: 0 !important; list-style: none; counter-reset: s; }
+  .steps li { counter-increment: s; background: var(--card-strong); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font-size: 13.5px; color: var(--text); margin: 0; }
+  .steps li::before { content: counter(s); display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--gold); color: var(--ink-on-gold); font-weight: 800; font-size: 12px; margin-right: 6px; }
+
+  .tier-table-wrap { overflow-x: auto; margin: 6px 0 10px; }
+  table.tiers { border-collapse: collapse; width: 100%; min-width: 300px; font-size: 14px; }
+  table.tiers th, table.tiers td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  table.tiers th { color: var(--gold); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+  table.tiers td.num { font-variant-numeric: tabular-nums; }
+  table.tiers .ur { font-family: 'Mirza', serif; font-size: 20px; color: var(--text); }
+
+  .guddi-row { display: flex; gap: 16px; align-items: center; }
+  .guddi-row img { width: 96px; height: auto; flex-shrink: 0; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.45)); }
+
+  /* Small Guddi face beside a section header: portrait WebP cropped to a round avatar. */
+  .pose { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; object-position: 50% 8%; background: var(--card-strong); border: 2px solid rgba(224,178,61,0.45); flex-shrink: 0; }
+
+  .no-results { background: var(--card); border: 1px dashed var(--line); border-radius: 14px; padding: 16px 18px; color: var(--text-soft); margin-bottom: 30px; display: flex; align-items: center; gap: 14px; overflow-wrap: anywhere; }
+  .no-results img { width: 72px; height: 96px; object-fit: contain; object-position: bottom; flex-shrink: 0; }
+  .no-results strong { color: var(--text); display: block; margin-bottom: 2px; }
+
+  .block { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px; margin-bottom: 30px; scroll-margin-top: 16px; }
+  .block h2 { margin: 0 0 6px; font-size: 22px; }
+  .block .sub { color: var(--text-soft); margin: 0 0 16px; }
 
   /* CONTACT */
-  .contact-card { padding: 26px 24px; }
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .contact-form input, .contact-form textarea {
-    background: var(--bg);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 13px 16px;
-    color: var(--text);
-    font-size: 14px;
-    font-family: inherit;
-    outline: none;
-  }
+  .contact-form { display: grid; gap: 10px; }
+  .contact-form label { font-size: 13px; font-weight: 600; color: var(--text-soft); }
+  .contact-form input, .contact-form textarea { width: 100%; font: inherit; color: var(--text); background: var(--bg); border: 1.5px solid var(--line); border-radius: 12px; padding: 11px 14px; outline: none; }
   .contact-form input:focus, .contact-form textarea:focus { border-color: var(--gold); }
-  .btn-primary {
-    background: var(--gold); color: var(--ink-on-gold); font-weight: 800; font-size: 15px;
-    padding: 14px 26px; border-radius: 100px; text-decoration: none; display: inline-flex;
-    align-items: center; gap: 8px; border: none; cursor: pointer; font-family: inherit;
-    box-shadow: 0 10px 30px rgba(224,178,61,0.25);
-  }
-  .btn-primary:disabled { opacity: 0.7; cursor: default; }
+  .btn { justify-self: start; background: var(--gold); color: var(--ink-on-gold); border: 0; border-radius: 100px; padding: 11px 22px; font: inherit; font-weight: 800; cursor: pointer; }
+  .btn:disabled { opacity: 0.7; cursor: default; }
+  .btn:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
   .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-  .privacy-note { font-size: 12.5px; color: var(--text-soft); margin: -2px 0 0; line-height: 1.5; }
+  .fine { font-size: 13px; color: var(--text-soft); margin: 0; }
   .contact-status { font-size: 13px; margin: 0; }
   .contact-status.ok { color: var(--mint); }
   .contact-status.err { color: #E39B84; }
 
-  .updated { font-size: 13px; color: var(--text-soft); margin: 0 0 18px; }
+  .terms h2 { color: var(--gold); }
+  .terms h3 { font-size: 15.5px; margin: 18px 0 4px; color: var(--text); }
+  .terms p, .terms li { color: var(--text-soft); font-size: 14.5px; }
+  .terms p { margin: 0 0 8px; }
+  .terms ul { margin: 0 0 8px; padding-left: 20px; }
+  .updated { font-size: 13px; color: var(--text-soft); }
 
-  .summary-ur {
-    margin-top: 30px;
-    background: linear-gradient(135deg, var(--card-strong), var(--card));
-    border: 1px solid var(--line);
-    border-radius: 22px;
-    padding: 24px 26px;
-    font-family: 'Mirza', serif;
-    text-align: right;
-    scroll-margin-top: 16px;
-  }
-  .summary-ur h2 { font-family: 'Mirza', serif; font-size: 24px; margin: 0 0 12px; color: var(--gold); }
+  .summary-ur { background: linear-gradient(135deg, var(--card-strong), var(--card)); border: 1px solid var(--line); border-radius: 18px; padding: 22px 24px; font-family: 'Mirza', serif; text-align: right; margin-bottom: 30px; scroll-margin-top: 16px; }
+  .summary-ur h2 { font-family: 'Mirza', serif; font-size: 26px; margin: 0 0 8px; color: var(--gold); }
   .summary-ur ul { margin: 0; padding-right: 20px; padding-left: 0; }
-  .summary-ur li { font-size: 18px; line-height: 2; color: var(--text-soft); }
+  .summary-ur li { font-size: 19px; line-height: 2; color: var(--text-soft); }
 
   footer {
     text-align: center;
@@ -181,18 +170,20 @@
     font-size: 13px;
   }
   footer .footer-links { margin-top: 12px; }
-  footer .footer-links a { color: var(--text-soft); margin: 0 8px; }
+  footer .footer-links a { color: var(--text-soft); font-weight: 400; margin: 0 8px; }
 
   @media (max-width: 640px) {
-    header { padding: 18px 20px; }
+    header { padding: 18px 16px; }
     .brand { font-size: 22px; }
-    main { padding: 10px 20px 30px; }
+    main { padding: 10px 16px 30px; }
     h1 { font-size: 28px; }
-    .part-title { font-size: 22px; }
-    .rule-card { padding: 18px 18px; }
-    .summary-ur { padding: 20px 18px; }
+  }
+  @media (max-width: 480px) {
+    .guddi-row { flex-direction: column; align-items: flex-start; }
+    .block, .summary-ur { padding: 18px; }
     .summary-ur li { font-size: 17px; }
   }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
@@ -208,356 +199,471 @@
 <main>
   <span class="eyebrow">💛 Help</span>
   <h1>Questions, answers &amp; <span>the fine print</span></h1>
-  <p class="lead">Everything you need to install Acha Karo, understand your points, and know how we look after your data. Still stuck? Message us at the bottom of the page.</p>
+  <p class="lead">Everything you need to install Acha Karo, understand points and tiers, and know how we look after your data. Still stuck? Message us at the bottom of the page.</p>
 
-  <nav class="jump" aria-label="On this page">
-    <a href="#faq">FAQ</a>
-    <a href="#contact">Contact us</a>
-    <a href="#terms">Terms of use</a>
-    <a href="#urdu" lang="ur">اردو خلاصہ</a>
-  </nav>
-
-  <!-- PART 1: FAQ -->
-  <h2 class="part-title" id="faq">FAQ</h2>
-
-  <!-- Search is fully local: filters the cards below in the page. Nothing is logged, stored or sent. -->
-  <div class="faq-search">
-    <label for="faq-q" class="visually-hidden">Search the FAQ</label>
-    <input type="search" id="faq-q" placeholder="Search questions…" autocomplete="off" spellcheck="false" />
-  </div>
-  <p id="faq-count" class="faq-count" aria-live="polite"></p>
-
-  <nav class="jump faq-jump" aria-label="FAQ sections">
-    <a href="#faq-how">How the app works</a>
-    <a href="#faq-tiers">Tiers</a>
-    <a href="#faq-installing">Installing</a>
-    <a href="#faq-points">Points</a>
-    <a href="#faq-privacy">Privacy</a>
-    <a href="#faq-moderation">Moderation</a>
-    <a href="#faq-guddi">Guddi</a>
-  </nav>
-
-  <section class="faq-group" id="faq-how">
-    <h3 class="group-title">How the app works</h3>
-
-    <div class="rule-card faq-placeholder">
-      <p><span class="placeholder">[PLACEHOLDER: How the app works questions, final copy coming from Marketing v3]</span></p>
-    </div>
-  </section>
-
-  <section class="faq-group" id="faq-tiers">
-    <h3 class="group-title">Tiers</h3>
-
-    <div class="rule-card faq-placeholder">
-      <p><span class="placeholder">[PLACEHOLDER: Tiers questions, final copy coming from Marketing v3]</span></p>
-    </div>
-  </section>
-
-  <section class="faq-group" id="faq-installing">
-    <h3 class="group-title">Installing the app</h3>
-
-    <div class="rule-card faq-item">
-      <h3>Why isn't Acha Karo on the Play Store?</h3>
-      <p>Not yet. For now you install it straight from our website (this is called an APK). Lots of new apps start this way. On iPhone, use the web version. It's the same app and works in Safari.</p>
-    </div>
-
-    <div class="rule-card faq-item">
-      <h3>Chrome says "file may be harmful". Is it safe?</h3>
-      <p>Yes. Chrome shows this warning for every app that doesn't come from the Play Store, so it doesn't mean anything was found in our file. Tap <strong>Download anyway</strong>.</p>
-      <p>Only download Acha Karo from this website (achakaro.vercel.app) or the link in our Instagram/TikTok bio. Never install a copy someone sends you on WhatsApp or anywhere else.</p>
-      <p>Want to check it yourself? See <a href="#verify" style="color:var(--gold); font-weight:700;">How can I check the app is genuine?</a> below.</p>
-    </div>
-
-    <div class="rule-card faq-item" id="verify">
-      <h3>How can I check the app is genuine?</h3>
-      <ul>
-        <li><strong>Our website is clean:</strong> check achakaro.vercel.app on <a href="https://transparencyreport.google.com/safe-browsing/search?url=achakaro.vercel.app" target="_blank" rel="noopener" style="color:var(--gold); font-weight:700;">Google Safe Browsing →</a></li>
-        <!-- Stays on tag prod1: new APK builds replace prod1/app-release.apk at the same URL (no per-version tags). Keep in sync with the APK URL on index.html. -->
-        <li><strong>Hosted on GitHub:</strong> the APK is downloaded straight from our <a href="https://github.com/musaibnhaseeb-source/acha-karo-releases/releases/tag/prod1" target="_blank" rel="noopener" style="color:var(--gold); font-weight:700;">GitHub release page →</a></li>
-        <li><strong>Antivirus scan:</strong> <span class="placeholder">[PLACEHOLDER: VirusTotal report link for the final v1.3 APK, only once it shows 0 detections]</span></li>
-      </ul>
-      <p style="margin-top:10px;"><span class="placeholder">[PLACEHOLDER, show only once the VirusTotal scan exists: "Easiest check: open the VirusTotal report above. It shows the same SHA-256 as ours."]</span></p>
-      <p><strong>For techies:</strong> SHA-256: <span class="placeholder">[APK_HASH]</span> · Signing cert: <span class="placeholder">[CERT_HASH]</span></p>
-      <p>To check the file, run <code>certutil -hashfile app-release.apk SHA256</code> on Windows or <code>shasum -a 256 app-release.apk</code> on Mac/Linux and compare the result with the SHA-256 above.</p>
-      <p>To check the signing cert, run <code>keytool -printcert -jarfile app-release.apk</code> and compare its SHA-256 fingerprint with the one above.</p>
-    </div>
-
-    <div class="rule-card faq-item">
-      <h3>What does "Install unknown apps" mean?</h3>
-      <p>Android asks you once to allow Chrome to install apps from outside the Play Store. Turn it on for Chrome, install Acha Karo, then you can turn it off again (Settings → Apps → Chrome → Install unknown apps).</p>
-    </div>
-
-    <div class="rule-card faq-item">
-      <h3>Play Protect says the app is unrecognised. What do I do?</h3>
-      <p>Play Protect shows this for new apps that aren't on the Play Store yet. Tap <strong>More details → Install anyway</strong>. <span class="placeholder">[CONFIRM: exact button wording on a current Android phone]</span></p>
-    </div>
-
-    <div class="rule-card faq-item">
-      <h3>The download button doesn't work from Instagram or TikTok.</h3>
-      <p>Their built-in browsers can't download apps. Tap <strong>⋯</strong> (top right) and choose <strong>Open in browser</strong> (Chrome on Android, Safari on iPhone). Or tap <strong>Copy link</strong> and paste it into Chrome.</p>
-    </div>
-
-    <div class="rule-card faq-item">
-      <h3>I have an iPhone.</h3>
-      <p>Tap <strong>Use on iPhone (Web)</strong> in Safari. For an app icon, tap Share → <strong>Add to Home Screen</strong>.</p>
-    </div>
-
-    <div class="rule-card faq-item">
-      <h3>How do I update?</h3>
-      <p>Download the latest APK from this page and install it over the old one. Your account and points stay safe because they're saved to your account, not the phone.</p>
-    </div>
-  </section>
-
-  <section class="faq-group" id="faq-points">
-    <h3 class="group-title">Points</h3>
-
-
-    <div class="rule-card faq-item">
-      <h3>What are Acha Karo points?</h3>
-      <p>Points show the acha kaam you've done. They're <strong>in-app points only, have no cash value, and no purchase is ever needed</strong>. You can't sell, swap, transfer or cash them out.</p>
-    </div>
-
-    <div class="rule-card faq-item">
-      <h3>How do I earn points?</h3>
-      <p>Do an acha kaam, add a photo in the app, and our team checks it. Once it's approved, your points appear on your profile and the leaderboard.</p>
-    </div>
-
-    <div class="rule-card faq-item">
-      <h3>Why hasn't my acha kaam been approved yet?</h3>
-      <p>A real person checks every submission, so it can take a little time. <span class="placeholder">[CONFIRM: typical review time, e.g. "within 24–48 hours"]</span> If it's rejected, you can try again with a clearer photo.</p>
-    </div>
-
-    <div class="rule-card faq-item">
-      <h3>Can I lose points?</h3>
-      <p>Yes, if a submission turns out to be fake, copied, or broke the rules (see the <a href="#terms" style="color:var(--gold); font-weight:700;">Terms</a> below).</p>
-    </div>
-  </section>
-
-  <section class="faq-group" id="faq-privacy">
-    <h3 class="group-title">Privacy</h3>
-
-
-    <div class="rule-card faq-item">
-      <h3>What do you collect?</h3>
-      <ul>
-        <li><strong>Profile:</strong> name, gender, date of birth and city (required). Phone number (optional).</li>
-        <li><strong>Profile photo (optional):</strong> stays on your phone and is never uploaded.</li>
-        <li><strong>Acha kaam photos:</strong> uploaded so our team can check them.</li>
-        <li><strong>Location:</strong> when you submit an acha kaam, your phone's location at that moment is saved with it, so our team can check it's real. Only our review team sees it; it's never shown to other users. <span class="placeholder">[CONFIRM: retention wording, Musa deciding]</span></li>
-      </ul>
-    </div>
-
-    <div class="rule-card faq-item">
-      <h3>Who can see my information?</h3>
-      <p>Other users see your <strong>name (as you typed it when you signed up), city, points and badge count</strong> on the leaderboard. Your acha kaam photos and location are seen only by our review team. We never sell your data, and we don't run ads.</p>
-      <p><span class="placeholder">[CONFIRM: leaderboard name display, Musa deciding]</span></p>
-    </div>
-
-    <div class="rule-card faq-item">
-      <h3>How do I delete my account?</h3>
-      <p>In the app, go to Settings → <strong>Delete account</strong> and tell us why. Our team then deletes your account and data. <span class="placeholder">[CONFIRM: how long it takes, and whether anything is kept, e.g. approved acha kaam records]</span></p>
-    </div>
-  </section>
-
-  <section class="faq-group" id="faq-moderation">
-    <h3 class="group-title">Moderation</h3>
-
-
-    <div class="rule-card faq-item">
-      <h3>Who checks acha kaam?</h3>
-      <p>The Acha Karo team. We check that the photo matches the acha kaam and that it's real.</p>
-    </div>
-
-    <div class="rule-card faq-item">
-      <h3>What gets rejected?</h3>
-      <ul>
-        <li>Photos copied from the internet or someone else.</li>
-        <li>The same photo submitted twice.</li>
-        <li>Staged or fake acha kaam.</li>
-        <li>Anything showing another person's face or private details without their permission.</li>
-        <li>Anything unsafe, hateful or inappropriate.</li>
-      </ul>
-    </div>
-
-    <div class="rule-card faq-item">
-      <h3>Should I show people I helped?</h3>
-      <p>Please don't. Respect people's dignity: photograph the acha kaam, not the person receiving help, and never show a child's face.</p>
-    </div>
-  </section>
-
-  <section class="faq-group" id="faq-guddi">
-    <h3 class="group-title">Guddi</h3>
-
-    <div class="rule-card faq-placeholder">
-      <p><span class="placeholder">[PLACEHOLDER: Guddi questions, final copy coming from Marketing v3]</span></p>
-    </div>
-  </section>
-
-  <div id="faq-empty" class="rule-card faq-empty" hidden>
-    <p>No questions match that. <a href="#contact" style="color:var(--gold); font-weight:700;">Ask us directly →</a></p>
+  <!-- Search is fully local: it filters the questions below. Nothing is logged, stored or sent. -->
+  <div class="search">
+    <label for="faq-search" class="visually-hidden">Search the FAQ</label>
+    <input id="faq-search" type="search" placeholder="Search: points, tiers, delete account, Guddi…" autocomplete="off" spellcheck="false">
+    <div class="search-meta" id="search-meta" aria-live="polite"></div>
   </div>
 
-  <!-- PART 2: CONTACT (moved from index.html; table, field names and payload unchanged) -->
-  <h2 class="part-title" id="contact">Still have a question?</h2>
-  <p class="part-sub">Question, bug, or just want to say hi? Our team reads every message.</p>
+  <nav class="chips" aria-label="FAQ sections">
+    <a href="#how">How it works</a>
+    <a href="#install">Installing</a>
+    <a href="#points">Points</a>
+    <a href="#tiers">Tiers &amp; badges</a>
+    <a href="#guddi">Guddi</a>
+    <a href="#privacy">Privacy</a>
+    <a href="#moderation">Moderation</a>
+    <a href="#terms">Terms</a>
+  </nav>
 
-  <div class="rule-card contact-card">
-    <form id="contact-form" class="contact-form">
-      <input type="text" name="name" placeholder="Your name" maxlength="100" required />
-      <input type="email" name="email" placeholder="Your email" maxlength="254" required />
-      <textarea name="message" placeholder="What's on your mind?" rows="4" maxlength="2000" required></textarea>
+  <div id="faq">
+
+  <section class="faq-section" id="how">
+    <h2><img class="pose" src="assets/guddi_explain.webp" width="44" height="44" loading="lazy" alt="">How the app works</h2>
+    <details class="qa" open data-keywords="kaise kaam karta hai, how to use, tareeqa, start, shuru, sign up, signup, register, account banana, steps, categories, kya karna hai">
+      <summary>How does Acha Karo work?</summary>
+      <div class="a">
+        <ol class="steps">
+          <li>Sign up and complete your profile</li>
+          <li>Pick an acha kaam and do it</li>
+          <li>Take a photo of it in the app</li>
+          <li>It's approved (most right away)</li>
+          <li>Points land on your profile</li>
+        </ol>
+        <p>There are 32 kinds of acha kaam across 5 areas: Environment, Animal Welfare, Civic &amp; Community, Social &amp; Human Welfare, and Health &amp; Hygiene.</p>
+      </div>
+    </details>
+    <details class="qa" data-keywords="password, pasword, passwrd, login, log in, sign in, signin, code, otp, o.t.p, 6 digit, email, e-mail, email nahi aayi, code nahi aaya, bhool gaya, bhool gayi, forgot, reset, resend, expired, can't log in, account access">
+      <summary>How do I log in? I forgot my password.</summary>
+      <div class="a">
+        <p><strong>No password needed.</strong> Enter your email and we'll send you a 6-digit code. It works the same way whether you're new or coming back.</p>
+        <p>Can't find the code?</p>
+        <ul>
+          <li>Check your spam or promotions folder.</li>
+          <li>Wait a minute, then tap <strong>Didn't get it? Resend code</strong>.</li>
+          <li>Codes expire after a short while, so always use the newest one.</li>
+        </ul>
+        <p>Lost access to that email? <a href="#contact">Contact us</a> and we'll help.</p>
+      </div>
+    </details>
+    <details class="qa" data-keywords="approve, approved, approval, manzoor, manzur, manzoori, check, review, moderator, pending, verify, instant, foran, auto">
+      <summary>Does a person check every acha kaam?</summary>
+      <div class="a">
+        <p>Most acha kaam are approved as soon as you submit them, and your points appear straight away.</p>
+        <p>Some go to our review team first:</p>
+        <ul>
+          <li>all donations</li>
+          <li>when your phone couldn't share its location</li>
+          <li>when you do the same kind of acha kaam 3 or more times in one day</li>
+        </ul>
+        <p>These are usually checked <strong>within 48 hours</strong>.</p>
+      </div>
+    </details>
+    <details class="qa" data-keywords="cooldown, cool down, wait, intezar, timer, locked, band, greyed, grey, gray, disabled, 1 hour, ghanta, 15 minute, again, dobara, limit">
+      <summary>Why can't I submit another acha kaam right away?</summary>
+      <div class="a">
+        <p>There's a short pause between submissions. You can do each kind of acha kaam once an hour, and there's a 15-minute pause after any submission. During some campaigns the pause is shorter.</p>
+      </div>
+    </details>
+    <details class="qa" data-keywords="age, umar, umer, 16, kids, bachay, bache, minimum, eligible, one account, ek account, kaun">
+      <summary>Who can use Acha Karo?</summary>
+      <div class="a"><p>Anyone aged <strong>16 or older</strong>. One account per person.</p></div>
+    </details>
+  </section>
+
+  <section class="faq-section" id="install">
+    <h2>Installing the app</h2>
+    <details class="qa" data-keywords="play store, playstore, google play, apk, store, app store, iphone, ios">
+      <summary>Why isn't Acha Karo on the Play Store?</summary>
+      <div class="a"><p>Not yet. For now you install it straight from our website (this is called an APK). On iPhone, use the web version. It's the same app and works in Safari.</p></div>
+    </details>
+    <details class="qa" data-keywords="virus, safe, mehfooz, mahfooz, harmful, danger, khatra, warning, scam, fake, real, asli, trust, bharosa, malware, hack">
+      <summary>Chrome says "file may be harmful". Is it safe?</summary>
+      <div class="a">
+        <p>Yes. Chrome shows this for every app that doesn't come from the Play Store. It doesn't mean anything was found in our file. Tap <strong>Download anyway</strong>.</p>
+        <p>Only download Acha Karo from this website or the link in our Instagram/TikTok bio. Never install a copy someone sends you on WhatsApp or anywhere else.</p>
+        <p><span class="ph">VirusTotal report + SHA-256: added after the v1.3 APK is rebuilt and the scan shows 0 detections</span> See <a href="#verify">How can I check the app is genuine?</a></p>
+      </div>
+    </details>
+    <details class="qa" data-keywords="install, download, lagana, lagaen, unknown sources, unknown apps, settings, permission, ijazat, allow, instal, instll">
+      <summary>What does "Install unknown apps" mean?</summary>
+      <div class="a"><p>Android asks you once to let Chrome install apps from outside the Play Store. Turn it on for Chrome, install Acha Karo, and then you can turn it off again: Settings → Apps → Chrome → Install unknown apps.</p></div>
+    </details>
+    <details class="qa" data-keywords="play protect, unrecognized, unrecognised, blocked, block, install anyway, install nahi ho raha, not installing, error, warning">
+      <summary>Play Protect says the app is unrecognised. What do I do?</summary>
+      <div class="a"><p>Play Protect shows this for new apps that aren't on the Play Store yet. Tap <span class="ph">More details → Install anyway (Musa to check wording on a phone)</span>.</p></div>
+    </details>
+    <details class="qa" data-keywords="download, dounload, downlod, not working, kaam nahi kar raha, instagram, insta, tiktok, tik tok, browser, chrome, open in browser, link, button">
+      <summary>The download button doesn't work from Instagram or TikTok.</summary>
+      <div class="a"><p>Their built-in browsers can't download apps. Tap <strong>⋯</strong> (top right) and choose <strong>Open in browser</strong>: Chrome on Android, Safari on iPhone. Or tap <strong>Copy link</strong> and paste it into Chrome.</p></div>
+    </details>
+    <details class="qa" data-keywords="iphone, i phone, ios, apple, safari, web, pwa, home screen, add to home screen">
+      <summary>I have an iPhone.</summary>
+      <div class="a"><p>Open our website in Safari and tap <strong>Use on iPhone (Web)</strong>. For an app icon, tap Share → <strong>Add to Home Screen</strong>.</p></div>
+    </details>
+    <details class="qa" data-keywords="update, new version, naya version, upgrade, reinstall, dobara install, latest, data lost, points lost">
+      <summary>How do I update the app?</summary>
+      <div class="a"><p>Download the latest APK from our website and install it over the old one. Your account, points and badges are saved to your account, not your phone, so nothing is lost.</p></div>
+    </details>
+    <!-- Kept from 433661d (not in the v3.1 copy). Keywords added by Website Worker. -->
+    <details class="qa" id="verify" data-keywords="genuine, asli, verify, check, hash, sha, sha-256, sha256, fingerprint, virustotal, virus total, safe browsing, github, cert, certificate, signature, keytool, certutil">
+      <summary>How can I check the app is genuine?</summary>
+      <div class="a">
+        <ul>
+          <li><strong>Our website is clean:</strong> check achakaro.vercel.app on <a href="https://transparencyreport.google.com/safe-browsing/search?url=achakaro.vercel.app" target="_blank" rel="noopener">Google Safe Browsing →</a></li>
+          <!-- Stays on tag prod1: new APK builds replace prod1/app-release.apk at the same URL (no per-version tags). Keep in sync with the APK URL on index.html. -->
+          <li><strong>Hosted on GitHub:</strong> the APK is downloaded straight from our <a href="https://github.com/musaibnhaseeb-source/acha-karo-releases/releases/tag/prod1" target="_blank" rel="noopener">GitHub release page →</a></li>
+          <li><strong>Antivirus scan:</strong> <span class="ph">[PLACEHOLDER: VirusTotal report link for the final v1.3 APK, only once it shows 0 detections]</span></li>
+        </ul>
+        <p><span class="ph">[PLACEHOLDER, show only once the VirusTotal scan exists: "Easiest check: open the VirusTotal report above. It shows the same SHA-256 as ours."]</span></p>
+        <p><strong>For techies:</strong> SHA-256: <span class="ph">[APK_HASH]</span> · Signing cert: <span class="ph">[CERT_HASH]</span></p>
+        <p>To check the file, run <code>certutil -hashfile app-release.apk SHA256</code> on Windows or <code>shasum -a 256 app-release.apk</code> on Mac/Linux and compare the result with the SHA-256 above.</p>
+        <p>To check the signing cert, run <code>keytool -printcert -jarfile app-release.apk</code> and compare its SHA-256 fingerprint with the one above.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="faq-section" id="points">
+    <h2><img class="pose" src="assets/guddi_cheer.webp" width="44" height="44" loading="lazy" alt="">Points</h2>
+    <details class="qa" data-keywords="points, point, pts, number, numbers, score, cash, paise, paisay, money, rupees, prize, reward, inaam, redeem, withdraw, sell, transfer">
+      <summary>What are Acha Karo points?</summary>
+      <div class="a"><p>Points show the acha kaam you've done. They're <strong>in-app points only, have no cash value, and no purchase is ever needed</strong>. You can't sell, swap, transfer or cash them out.</p></div>
+    </details>
+    <details class="qa" data-keywords="points, kitne points, score, number, how much, value, marks, list">
+      <summary>How many points do I get?</summary>
+      <div class="a"><p>Between <strong>8 and 40 points</strong> per acha kaam, depending on the effort. For example, watering a plant gives 10, clearing litter gives 15, feeding a stray gives 20, planting a sapling gives 25, and getting a stray neutered gives 40.</p></div>
+    </details>
+    <details class="qa" data-keywords="pending, waiting, intezar, approve, manzoor, manzur, not approved, points nahi mile, missing points, stuck, 48 hours">
+      <summary>My acha kaam is still pending. Why?</summary>
+      <div class="a"><p>It's waiting for our team to check it, usually <strong>within 48 hours</strong>. If it isn't approved, just do another acha kaam with a clear photo.</p></div>
+    </details>
+    <details class="qa" data-keywords="lose points, points cut, kam, deduct, deducted, remove, minus, penalty, fake, ban">
+      <summary>Can I lose points?</summary>
+      <div class="a"><p>Yes, if an acha kaam turns out to be fake or copied, or breaks the rules. See the <a href="#terms">Terms</a> below.</p></div>
+    </details>
+  </section>
+
+  <section class="faq-section" id="tiers">
+    <h2><img class="pose" src="assets/guddi_strong.webp" width="44" height="44" loading="lazy" alt="">Tiers &amp; badges</h2>
+    <details class="qa" data-keywords="badge, badges, bage, medal, tamgha, achievement, streak, unlock">
+      <summary>What are badges?</summary>
+      <div class="a">
+        <p>There are 40 badges for milestones. For example:</p>
+        <ul>
+          <li>your first acha kaam</li>
+          <li>a 7-day streak</li>
+          <li>feeding 5 strays</li>
+          <li>trying all 5 areas</li>
+          <li>reaching the top 10</li>
+        </ul>
+        <p>Each badge unlocks automatically when you get there.</p>
+      </div>
+    </details>
+    <details class="qa" data-keywords="tier, tiers, teir, level, levels, rank, darja, darjah, chooza, billo, tootu, tota, bhalu, bhaloo, cheeta, babbar sher, sher, shaheen, level up">
+      <summary>What are the tiers, and how do I move up?</summary>
+      <div class="a">
+        <p>Your tier depends on <strong>how many badges you have</strong>, not on your points. There are 7 tiers:</p>
+        <div class="tier-table-wrap">
+          <table class="tiers">
+            <thead><tr><th>Tier</th><th>Name</th><th>Badges needed</th></tr></thead>
+            <tbody>
+              <tr><td>🐣 <span class="ur">چوزہ</span></td><td>Chooza</td><td class="num">0 (everyone starts here)</td></tr>
+              <tr><td>🐱 <span class="ur">بلو</span></td><td>Billo</td><td class="num">3</td></tr>
+              <tr><td>🦜 <span class="ur">طوطو</span></td><td>Tootu</td><td class="num">8</td></tr>
+              <tr><td>🐻 <span class="ur">بھالو</span></td><td>Bhaloo</td><td class="num">14</td></tr>
+              <tr><td>🐆 <span class="ur">چیتا</span></td><td>Cheeta</td><td class="num">21</td></tr>
+              <tr><td>🦁 <span class="ur">ببر شیر</span></td><td>Babbar Sher</td><td class="num">29</td></tr>
+              <tr><td>🦅 <span class="ur">شاہین</span></td><td>Shaheen</td><td class="num">36</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>When you reach a new tier, Guddi celebrates with you in the app.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="faq-section" id="guddi">
+    <h2><img class="pose" src="assets/guddi_smile.webp" width="44" height="44" loading="lazy" alt="">Guddi</h2>
+    <details class="qa" data-keywords="guddi, gudi, guddy, mascot, character, girl, larki, kaun hai">
+      <summary>Who is Guddi?</summary>
+      <div class="a">
+        <div class="guddi-row">
+          <img src="assets/guddi_smile.webp" width="96" loading="lazy" alt="Guddi, the Acha Karo mascot, smiling">
+          <p>Guddi is Acha Karo's mascot, a Pakistani girl who loves doing acha kaam and gets everyone around her to join in. You'll see her in the app and on our Instagram and TikTok.</p>
+        </div>
+      </div>
+    </details>
+    <details class="qa" data-keywords="guddi, reminder, notification, notifications, alert, band karna, turn off, off, mute, daily idea, idea">
+      <summary>Why does Guddi show up in the app?</summary>
+      <div class="a">
+        <p>She's there to help, not to nag. Guddi shares a daily acha kaam idea on your Home screen, cheers you on when you do one, and celebrates when you reach a new tier.</p>
+        <p>She can also send one gentle reminder a day. You can switch it on or off in <strong>Settings</strong>.</p>
+      </div>
+    </details>
+    <details class="qa" data-keywords="guddi, kuch bhi, can be anything, girls, larkiyan, women, empowerment, soldier, fauji, pilot, teacher, sword, talwar, strong">
+      <summary>What does "Guddi kuch bhi ban sakti hai" mean?</summary>
+      <div class="a"><p>"Guddi can be anything." She shows up as a soldier, a pilot, a teacher, a sports star and more, because girls in Pakistan can be anything they want to be. It's about strength and ability. And the same goes for you: <strong>aap bhi kuch bhi ban sakte hain</strong>.</p></div>
+    </details>
+  </section>
+
+  <section class="faq-section" id="privacy">
+    <h2>Privacy</h2>
+    <details class="qa" data-keywords="data, privacy, personal, info, information, collect, phone, number, photo, tasveer, picture, location, gps, jagah, date of birth, dob, gender">
+      <summary>What information do you collect?</summary>
+      <div class="a">
+        <ul>
+          <li><strong>Profile:</strong> name, gender, date of birth and city (required). Phone number is optional.</li>
+          <li><strong>Profile photo (optional):</strong> stays on your phone and is never uploaded.</li>
+          <li><strong>Acha kaam photos:</strong> uploaded so we can check them.</li>
+          <li><strong>Location:</strong> when you submit an acha kaam, your phone's location at that moment is saved with it, so we can check it's real.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="qa" data-keywords="privacy, name, naam, public, leaderboard, visible, dikhta, nickname, fake name, real name, asli naam, city, shehar">
+      <summary>Who can see my information?</summary>
+      <div class="a">
+        <p>On the leaderboard, other users see your <strong>first name and last initial</strong> (for example "Ayesha K."), your city, your points and your number of badges.</p>
+        <p>You don't have to use your real name. A nickname is fine.</p>
+        <p>Your acha kaam photos and locations are seen only by our review team, never by other users. We never sell your data, and we don't run ads.</p>
+      </div>
+    </details>
+    <details class="qa" data-keywords="location, gps, jagah, map, ngo, share, sharing, track, tracking, where, kahan">
+      <summary>What do you do with acha kaam locations?</summary>
+      <div class="a">
+        <p>We use them to check that an acha kaam is real. We may also use them to find areas that need help, and share <strong>area-level summaries</strong> with partner NGOs. We never share your name, your profile or your exact location.</p>
+        <p>Locations are kept while your account exists, and deleted when your account is deleted.</p>
+      </div>
+    </details>
+    <details class="qa" data-keywords="photo, tasveer, picture, instagram, tiktok, social media, post, share, permission, ijazat">
+      <summary>Will you post my acha kaam photo on social media?</summary>
+      <div class="a"><p>Only with your permission. We'll ask you first.</p></div>
+    </details>
+    <details class="qa" data-keywords="delete, del, hatana, hatao, khatam, khatam karna, remove, close, band, account delete, deactivate, data delete, 30 days">
+      <summary>How do I delete my account?</summary>
+      <div class="a">
+        <p>In the app, go to Settings → <strong>Delete account</strong> and tell us why. Our team deletes your account <strong>within 30 days</strong>. Your acha kaam, photos and locations are deleted along with it.</p>
+      </div>
+    </details>
+    <details class="qa" data-keywords="contact, message, email, e-mail, rabta, form, spam, mailing list, 3 months">
+      <summary>What happens to messages I send through the contact form?</summary>
+      <div class="a"><p>We use your name and email only to reply to you, and we keep messages for <strong>3 months</strong>. We never add you to a mailing list.</p></div>
+    </details>
+  </section>
+
+  <section class="faq-section" id="moderation">
+    <h2>Moderation</h2>
+    <details class="qa" data-keywords="reject, rejected, na manzoor, namanzoor, not approved, fake, copy, copied, rules, qawaid">
+      <summary>What gets rejected?</summary>
+      <div class="a">
+        <ul>
+          <li>Photos copied from the internet or from someone else.</li>
+          <li>The same photo submitted twice.</li>
+          <li>Staged or fake acha kaam.</li>
+          <li>Photos showing another person's face or private details without their permission.</li>
+          <li>Anything unsafe, hateful or inappropriate.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="qa" data-keywords="face, chehra, people, log, person, insaan, child, bacha, bachay, privacy, dignity, izzat, photo">
+      <summary>Should I show the people I helped?</summary>
+      <div class="a"><p>Please don't. Photograph the acha kaam, not the person (<strong>kaam ki tasveer lein, insaan ki nahi</strong>). Never show a child's face.</p></div>
+    </details>
+    <details class="qa" data-keywords="rejected, reject, na manzoor, namanzoor, try again, dobara, appeal, why rejected">
+      <summary>My acha kaam was rejected. What now?</summary>
+      <div class="a"><p>No problem. Just do another one, with a clear photo of the acha kaam itself.</p></div>
+    </details>
+  </section>
+
+  </div>
+
+  <div class="no-results" id="no-results" hidden>
+    <img src="assets/guddi_curious.webp" width="72" height="96" loading="lazy" alt="">
+    <div><strong>Hmm, Guddi couldn't find that.</strong>Nothing matches "<span id="nr-term"></span>". Try another word, or <a href="#contact">ask us directly</a>.</div>
+  </div>
+
+  <!-- CONTACT (moved from index.html; table, field names and payload unchanged) -->
+  <section class="block" id="contact">
+    <h2>Still have a question?</h2>
+    <p class="sub">Question, bug, or just want to say hi? Our team reads every message.</p>
+    <form class="contact-form" id="contact-form">
+      <label for="c-name">Your name</label>
+      <input id="c-name" name="name" type="text" maxlength="100" required>
+      <label for="c-email">Your email</label>
+      <input id="c-email" name="email" type="email" maxlength="254" required>
+      <label for="c-msg">What's on your mind?</label>
+      <textarea id="c-msg" name="message" rows="4" maxlength="2000" required></textarea>
       <!-- spam honeypot: hidden from people, bots fill it in. Never sent anywhere. -->
       <div class="hp-field" aria-hidden="true">
         <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
       </div>
-      <button type="submit" class="btn-primary" style="align-self:flex-start;">Send message</button>
-      <p class="privacy-note">We only use your name and email to reply to you. We never add you to a mailing list or share your details.</p>
+      <button class="btn" type="submit">Send message</button>
+      <p class="fine">We only use your name and email to reply to you, and we keep messages for 3 months. We never add you to a mailing list or share your details.</p>
       <p id="contact-status" class="contact-status" hidden></p>
     </form>
-  </div>
+  </section>
 
-  <!-- PART 3: TERMS -->
-  <h2 class="part-title" id="terms">Terms of use</h2>
-  <p class="updated">Last updated: <span class="placeholder">[DATE]</span></p>
+  <section class="block terms" id="terms">
+    <h2>Terms of Use</h2>
+    <p class="updated">Last updated: <span class="ph">[DATE]</span></p>
 
-  <div class="rule-card">
     <h3>1. What Acha Karo is</h3>
-    <p>Acha Karo is a free app that encourages everyday acha kaam across Pakistan. You do an acha kaam, share a photo, earn points, and see how your city is doing. By using the app or this website you agree to these terms.</p>
-  </div>
+    <p>Acha Karo is a free app that encourages everyday acha kaam across Pakistan. You do an acha kaam, share a photo, earn points and badges, and see how your city is doing. By using the app or this website, you agree to these terms.</p>
 
-  <div class="rule-card">
     <h3>2. Who can use it</h3>
-    <p><span class="placeholder">[CONFIRM: minimum age for the app itself. The launch bonus is 16+.]</span> One account per person. Keep your login private; you're responsible for what happens on your account.</p>
-  </div>
+    <p>You must be <strong>16 or older</strong>. One account per person. Keep your login private, because you're responsible for what happens on your account.</p>
 
-  <div class="rule-card">
     <h3>3. Points</h3>
     <ul>
-      <li>Acha Karo points are in-app points only.</li>
-      <li>They have <strong>no cash value, and no purchase is needed</strong>.</li>
+      <li>Acha Karo points are in-app points only. They have <strong>no cash value, and no purchase is needed</strong>.</li>
       <li>They can't be sold, exchanged, transferred or cashed out.</li>
-      <li>We may correct or remove points that were earned by mistake or by breaking these terms.</li>
+      <li>We may correct or remove points that were given by mistake or earned by breaking these terms.</li>
       <li>Bonus points in any campaign follow that campaign's own rules page.</li>
     </ul>
-  </div>
 
-  <div class="rule-card">
     <h3>4. Your acha kaam submissions</h3>
     <ul>
       <li>Only submit acha kaam you really did, with photos you took yourself.</li>
-      <li>Don't photograph people in a way that embarrasses them. Never show a child's face. Don't show anyone's private details.</li>
-      <li>By submitting, you let Acha Karo store your photo so our team can check it. <span class="placeholder">[CONFIRM: can Acha Karo reuse submissions on social media? If yes, say "only with your permission".]</span></li>
-      <li>Our team can approve or reject any submission. Their decision is final.</li>
+      <li>Photograph the acha kaam, not the person. Never show a child's face, and don't show anyone's private details.</li>
+      <li>By submitting, you let Acha Karo store your photo and its location so we can check it. We'll only post your photo on social media with your permission.</li>
+      <li>Most acha kaam are approved automatically. Some are checked by our team, usually within 48 hours. We can review, approve or reject any acha kaam, and our decision is final.</li>
     </ul>
-  </div>
 
-  <div class="rule-card">
     <h3>5. What's not allowed</h3>
+    <p>Fake, copied or repeated submissions; multiple accounts; gaming the leaderboard; harassing other users; anything illegal, hateful or sexual; tampering with the app or pretending to be Acha Karo. We can suspend or remove accounts that break these rules.</p>
+
+    <h3>6. Your data</h3>
     <ul>
-      <li>Fake, copied or repeated submissions.</li>
-      <li>Multiple accounts.</li>
-      <li>Trying to game the leaderboard.</li>
-      <li>Harassing other users.</li>
-      <li>Anything illegal, hateful or sexual.</li>
-      <li>Tampering with the app or pretending to be Acha Karo.</li>
+      <li>We collect only what the app needs (see <a href="#privacy">Privacy</a> above).</li>
+      <li>Other users see your first name and last initial, city, points and badge count. A nickname is fine.</li>
+      <li>We may use acha kaam locations to find areas that need help, and share area-level summaries with partner NGOs. We never share your name, your profile or your exact location.</li>
+      <li>We don't sell your data or show ads.</li>
+      <li>If you delete your account, we delete it within 30 days, along with your acha kaam, photos and locations.</li>
+      <li>We keep contact form messages for 3 months.</li>
     </ul>
-    <p style="margin-top:10px;">We can suspend or remove accounts that break these rules.</p>
-  </div>
 
-  <div class="rule-card">
-    <h3>6. Installing the app</h3>
+    <h3>7. Installing the app</h3>
     <p>Download Acha Karo only from achakaro.vercel.app or the link in our official social media bios. We're not responsible for copies downloaded from anywhere else.</p>
-  </div>
 
-  <div class="rule-card">
-    <h3>7. Your data</h3>
-    <p>See "Privacy" in the <a href="#faq" style="color:var(--gold); font-weight:700;">FAQ</a> above. We collect only what the app needs to work. We don't sell your data and we don't show ads. You can ask us to delete your account at any time.</p>
-  </div>
-
-  <div class="rule-card">
     <h3>8. The app is still growing</h3>
-    <p>Acha Karo is a new app in a pilot phase. Features may change, and things may occasionally break. We'll do our best to fix problems quickly, but the app is provided as it is.</p>
-  </div>
+    <p>Acha Karo is new and still in a pilot phase. Features may change, and things may occasionally break. We'll fix problems as quickly as we can, but the app is provided as it is.</p>
 
-  <div class="rule-card">
     <h3>9. Changes</h3>
-    <p>If we change these terms, we'll update this page and the date at the top. If you keep using the app after a change, that means you accept the new terms.</p>
-  </div>
+    <p>If we change these terms, we'll update this page and the date at the top. If you keep using the app after a change, you accept the new terms.</p>
 
-  <div class="rule-card">
     <h3>10. Not affiliated</h3>
     <p>Acha Karo is not sponsored, endorsed or administered by, or associated with, Instagram, Meta, TikTok or Google.</p>
-  </div>
 
-  <div class="rule-card">
-    <h3>11. Contact</h3>
-    <p>Use the <a href="#contact" style="color:var(--gold); font-weight:700;">Contact Us form</a> on this page.</p>
-    <p><span class="placeholder">[CONFIRM: add "These terms are governed by the laws of Pakistan"? Musa's call.]</span></p>
-  </div>
+    <h3>11. Governing law</h3>
+    <p>These terms are governed by the laws of Pakistan.</p>
 
-  <!-- PART 4: URDU SUMMARY -->
-  <div class="summary-ur" id="urdu" dir="rtl" lang="ur">
+    <h3>12. Contact</h3>
+    <p>Use the <a href="#contact">contact form</a> on this page.</p>
+  </section>
+
+  <section class="summary-ur" id="urdu" dir="rtl" lang="ur">
     <h2>خلاصہ</h2>
     <ul>
-      <li>اچھا کرو ایک مفت ایپ ہے۔ اچھا کام کریں، تصویر شیئر کریں اور پوائنٹس حاصل کریں۔</li>
-      <li>پوائنٹس صرف ایپ کے اندر ہیں۔ ان کی کوئی نقد قیمت نہیں، اور کچھ خریدنے کی ضرورت نہیں۔ انہیں بیچا، بدلا یا منتقل نہیں کیا جا سکتا۔</li>
+      <li>اچھا کرو ایک مفت ایپ ہے۔ اچھا کام کریں، تصویر لیں، اور پوائنٹس اور بیجز حاصل کریں۔ عمر 16 سال یا اس سے زیادہ، ایک شخص ایک اکاؤنٹ۔</li>
+      <li>پوائنٹس صرف ایپ کے اندر ہیں۔ ان کی کوئی نقد قیمت نہیں، اور کچھ خریدنے کی ضرورت نہیں۔</li>
+      <li>زیادہ تر اچھے کام فوراً منظور ہو جاتے ہیں۔ کچھ ہماری ٹیم چیک کرتی ہے، عموماً 48 گھنٹوں کے اندر۔</li>
+      <li>آپ کا درجہ (چوزہ سے شاہین تک) بیجز کی تعداد سے طے ہوتا ہے۔</li>
+      <li>دوسرے صارفین آپ کا پہلا نام اور آخری نام کا پہلا حرف، شہر، پوائنٹس اور بیجز دیکھ سکتے ہیں۔ آپ فرضی نام بھی استعمال کر سکتے ہیں۔</li>
+      <li>اچھے کام کی تصویر اور لوکیشن صرف ہماری ٹیم دیکھتی ہے۔ ہم مدد کی ضرورت والے علاقے ڈھونڈنے کے لیے لوکیشنز استعمال کر سکتے ہیں اور پارٹنر این جی اوز کے ساتھ صرف علاقے کی سطح کا خلاصہ شیئر کر سکتے ہیں، کبھی آپ کا نام، پروفائل یا درست لوکیشن نہیں۔</li>
+      <li>آپ کی تصویر سوشل میڈیا پر صرف آپ کی اجازت سے لگائی جائے گی۔</li>
+      <li>اکاؤنٹ ڈیلیٹ کرنے کے لیے: ایپ میں Settings ← Delete account۔ 30 دن کے اندر اکاؤنٹ، اچھے کام، تصویریں اور لوکیشنز سب ڈیلیٹ کر دیے جاتے ہیں۔</li>
+      <li>رابطہ فارم کے پیغامات 3 ماہ تک رکھے جاتے ہیں۔</li>
       <li>ایپ صرف achakaro.vercel.app یا ہمارے آفیشل سوشل میڈیا بائیو کے لنک سے ڈاؤن لوڈ کریں۔</li>
-      <li>کروم کی "file may be harmful" وارننگ ہر اُس ایپ پر آتی ہے جو پلے اسٹور پر نہیں۔ "Download anyway" دبائیں۔</li>
-      <li>ہر اچھا کام ہماری ٹیم چیک کرتی ہے۔ جعلی یا کاپی کی گئی تصویریں مسترد ہوں گی۔</li>
-      <li>دوسرے صارفین آپ کا نام، شہر، پوائنٹس اور بیجز کی تعداد دیکھ سکتے ہیں۔ آپ کی تصویریں اور لوکیشن صرف ہماری ٹیم دیکھتی ہے۔ ہم آپ کا ڈیٹا نہیں بیچتے۔</li>
-      <li>اکاؤنٹ ڈیلیٹ کرنے کے لیے: ایپ میں Settings ← Delete account۔</li>
-      <li>کسی بھی فرق کی صورت میں انگریزی شرائط لاگو ہوں گی۔</li>
+      <li>یہ شرائط پاکستان کے قوانین کے تحت ہیں۔ کسی بھی فرق کی صورت میں انگریزی شرائط لاگو ہوں گی۔</li>
     </ul>
-  </div>
+  </section>
 </main>
 
 <footer>
   <div>Made with ❤️ for a better Pakistan, one good deed at a time.</div>
   <div style="margin-top: 12px; font-weight: 700; color: var(--gold);">@acha.karo.pk</div>
-  <div class="footer-links"><a href="index.html">Home</a> · <a href="rules.html">Launch Bonus Rules</a></div>
+  <div class="footer-links"><a href="index.html">Home</a> · <a href="rules.html">Launch Bonus Rules</a> · <a href="#urdu" lang="ur">اردو خلاصہ</a></div>
 </footer>
 
 <script>
-// FAQ search. Filters the cards on this page as you type. The search text never leaves the
-// page: no network calls, no storage, no URL changes, no logging.
+// FAQ search. Filters the questions on this page as you type (matching visible text plus the
+// hidden data-keywords synonyms) and highlights hits. The search text never leaves the page:
+// no network calls, no storage, no URL changes, no logging.
 (function () {
-  var input = document.getElementById('faq-q');
-  var count = document.getElementById('faq-count');
-  var empty = document.getElementById('faq-empty');
-  var jump = document.querySelector('.faq-jump');
-  var groups = Array.prototype.slice.call(document.querySelectorAll('.faq-group'));
+  var input = document.getElementById('faq-search');
+  var meta = document.getElementById('search-meta');
+  var noRes = document.getElementById('no-results');
+  var nrTerm = document.getElementById('nr-term');
+  var sections = Array.prototype.slice.call(document.querySelectorAll('#faq .faq-section'));
+  var items = Array.prototype.slice.call(document.querySelectorAll('#faq .qa'));
+  var initialOpen = items.map(function (d) { return d.open; });
 
-  function norm(t) { return (t || '').toLowerCase().replace(/\s+/g, ' '); }
+  // Keep original HTML per item so highlights can be cleared cleanly.
+  var originals = items.map(function (d) { return d.innerHTML; });
 
-  // Index each question once: visible text plus optional data-keywords (e.g. Roman Urdu synonyms).
-  var items = Array.prototype.slice.call(document.querySelectorAll('.faq-item')).map(function (el) {
-    return { el: el, text: norm(el.textContent + ' ' + (el.getAttribute('data-keywords') || '')) };
-  });
+  function escapeRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+  function highlight(root, re) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (n) {
+      re.lastIndex = 0;
+      if (!re.test(n.nodeValue)) return;
+      re.lastIndex = 0;
+      var frag = document.createDocumentFragment();
+      var last = 0, m;
+      var text = n.nodeValue;
+      while ((m = re.exec(text))) {
+        frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        var mk = document.createElement('mark');
+        mk.textContent = m[0];
+        frag.appendChild(mk);
+        last = m.index + m[0].length;
+      }
+      frag.appendChild(document.createTextNode(text.slice(last)));
+      n.parentNode.replaceChild(frag, n);
+    });
+  }
 
   function run() {
-    var words = norm(input.value).trim().split(' ').filter(Boolean);
-    var searching = words.length > 0;
+    var q = input.value.trim().toLowerCase();
+    var words = q.split(/\s+/).filter(Boolean);
     var shown = 0;
-
-    items.forEach(function (it) {
-      var match = !searching || words.every(function (w) { return it.text.indexOf(w) !== -1; });
-      it.el.hidden = !match;
-      if (match) shown++;
+    items.forEach(function (d, i) {
+      d.innerHTML = originals[i];
+      if (!words.length) { d.hidden = false; d.open = initialOpen[i]; return; }
+      var text = (d.textContent + ' ' + (d.getAttribute('data-keywords') || '')).toLowerCase();
+      var match = words.every(function (w) { return text.indexOf(w) !== -1; });
+      d.hidden = !match;
+      if (match) {
+        shown++;
+        d.open = true;
+        highlight(d, new RegExp('(' + words.map(escapeRe).join('|') + ')', 'gi'));
+      }
     });
-
-    groups.forEach(function (g) {
-      // placeholder-only sections are hidden while searching
-      g.querySelectorAll('.faq-placeholder').forEach(function (p) { p.hidden = searching; });
-      g.hidden = searching && !g.querySelector('.faq-item:not([hidden])');
+    sections.forEach(function (s) {
+      s.hidden = !!words.length && !s.querySelector('.qa:not([hidden])');
     });
-
-    jump.hidden = searching;
-    empty.hidden = !searching || shown > 0;
-    count.textContent = !searching ? '' : shown === 0 ? '' :
-      shown + (shown === 1 ? ' question matches' : ' questions match');
+    if (!words.length) { meta.textContent = ''; noRes.hidden = true; return; }
+    meta.textContent = shown ? shown + (shown === 1 ? ' answer' : ' answers') + ' found' : '';
+    noRes.hidden = shown > 0;
+    nrTerm.textContent = input.value.trim();
   }
 
   input.addEventListener('input', run);
+
+  // A link to a question (e.g. #verify) opens it; clear any search first so it's visible.
+  function openFromHash() {
+    var el = location.hash && document.getElementById(location.hash.slice(1));
+    if (!el || !el.classList.contains('qa')) return;
+    if (el.hidden) { input.value = ''; run(); }
+    el.open = true;
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
 })();
 </script>
 
