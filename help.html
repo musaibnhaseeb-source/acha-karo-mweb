@@ -129,6 +129,7 @@
     box-shadow: 0 10px 30px rgba(224,178,61,0.25);
   }
   .btn-primary:disabled { opacity: 0.7; cursor: default; }
+  .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .privacy-note { font-size: 12.5px; color: var(--text-soft); margin: -2px 0 0; line-height: 1.5; }
   .contact-status { font-size: 13px; margin: 0; }
   .contact-status.ok { color: var(--mint); }
@@ -214,7 +215,7 @@
     <h3>How can I check the app is genuine?</h3>
     <ul>
       <li><strong>Our website is clean:</strong> check achakaro.vercel.app on <a href="https://transparencyreport.google.com/safe-browsing/search?url=achakaro.vercel.app" target="_blank" rel="noopener" style="color:var(--gold); font-weight:700;">Google Safe Browsing →</a></li>
-      <!-- Release tag must match the APK URL on index.html (currently prod1). If the v1.3 APK moves to a new tag, update both. -->
+      <!-- Stays on tag prod1: new APK builds replace prod1/app-release.apk at the same URL (no per-version tags). Keep in sync with the APK URL on index.html. -->
       <li><strong>Hosted on GitHub:</strong> the APK is downloaded straight from our <a href="https://github.com/musaibnhaseeb-source/acha-karo-releases/releases/tag/prod1" target="_blank" rel="noopener" style="color:var(--gold); font-weight:700;">GitHub release page →</a></li>
       <li><strong>Antivirus scan:</strong> <span class="placeholder">[PLACEHOLDER: VirusTotal report link for the final v1.3 APK, only once it shows 0 detections]</span></li>
     </ul>
@@ -323,9 +324,13 @@
 
   <div class="rule-card contact-card">
     <form id="contact-form" class="contact-form">
-      <input type="text" name="name" placeholder="Your name" required />
-      <input type="email" name="email" placeholder="Your email" required />
-      <textarea name="message" placeholder="What's on your mind?" rows="4" required></textarea>
+      <input type="text" name="name" placeholder="Your name" maxlength="100" required />
+      <input type="email" name="email" placeholder="Your email" maxlength="254" required />
+      <textarea name="message" placeholder="What's on your mind?" rows="4" maxlength="2000" required></textarea>
+      <!-- spam honeypot: hidden from people, bots fill it in. Never sent anywhere. -->
+      <div class="hp-field" aria-hidden="true">
+        <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+      </div>
       <button type="submit" class="btn-primary" style="align-self:flex-start;">Send message</button>
       <p class="privacy-note">We only use your name and email to reply to you. We never add you to a mailing list or share your details.</p>
       <p id="contact-status" class="contact-status" hidden></p>
@@ -448,6 +453,16 @@
     e.preventDefault();
     var submitBtn = form.querySelector('button[type="submit"]');
     var data = new FormData(form);
+
+    // Honeypot filled in = bot. Pretend it worked and send nothing.
+    if (data.get('website')) {
+      form.reset();
+      status.textContent = "Sent! Guddi's on it. 🌱";
+      status.className = 'contact-status ok';
+      status.hidden = false;
+      return;
+    }
+
     var payload = {
       name: data.get('name').trim(),
       email: data.get('email').trim(),
