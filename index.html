@@ -118,6 +118,7 @@
     z-index: 3;
   }
   .floating-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-guddi-mobile { display: none; }
 
   /* shown only inside TikTok/Instagram/etc. in-app browsers, which can't install the APK */
   .inapp-notice {
@@ -338,6 +339,10 @@
     .hero { padding: 10px 20px 20px; }
     .hero-grid { grid-template-columns: 1fr; gap: 10px; }
     .hero-mascot { display: none; } /* keep the download button above the fold on phones */
+    .hero-guddi-mobile {
+      display: block; float: right; width: 84px; height: auto;
+      margin: 0 0 6px 10px; filter: drop-shadow(0 10px 18px rgba(0,0,0,0.45));
+    }
     .safe-grid { grid-template-columns: 1fr; gap: 22px; }
     .panel { padding: 24px 20px; }
     .grid-3, .faq-grid { grid-template-columns: 1fr; gap: 12px; }
@@ -380,6 +385,8 @@
 <section class="hero" id="top">
   <div class="hero-grid">
     <div>
+      <!-- phones only: small Guddi (same file as the desktop image, so no extra download) -->
+      <img class="hero-guddi-mobile" src="assets/guddi-hero-phone.webp" width="84" height="156" alt="" />
       <span class="eyebrow">🇵🇰 Made for Pakistan's good-doers</span>
       <h1>Do small acha kaam.<br><span>Guddi cheers you on.</span></h1>
       <p class="hero-ur" lang="ur-Latn">Chhota sa acha kaam. Guddi aap ke saath.</p>
@@ -460,7 +467,7 @@
       <img src="assets/guddi_explain.webp" width="56" height="56" loading="lazy" alt="" />
       <h2>How it works</h2>
     </div>
-    <p>Three steps. Small counts.</p>
+    <p>Three steps. Every small acha kaam counts.</p>
   </div>
   <div class="grid-3">
     <div class="step-card">
@@ -476,7 +483,8 @@
     <div class="step-card">
       <div class="num">3</div>
       <h3>Get points &amp; badges</h3>
-      <p>Build streaks, unlock badges, and climb the weekly board as “Ayesha K.”: only your first name and last initial are shown.</p>
+      <!-- "first name and last initial" is only true once app v1.3 ships: this page must go live with v1.3. -->
+      <p>Build streaks, unlock badges and climb the weekly board. Only your first name and last initial are shown (like “Ayesha K.”), and a nickname is fine.</p>
     </div>
   </div>
   <!-- Category names and icons match the app (acha_karo_app/lib/data/deed_catalog.dart categoryDefs) -->
@@ -503,7 +511,7 @@
       <img src="assets/guddi_smile.webp" width="463" height="720" loading="lazy" alt="Guddi, the Acha Karo mascot, smiling" />
       <div>
         <h2>Meet Guddi 🇵🇰</h2>
-        <p>Guddi is the face of Acha Karo: curious, mischievous, and always learning. <strong>Guddi kuch bhi ban sakti hai</strong>, and so can you.</p>
+        <p>Guddi is the face of Acha Karo: curious, cheerful, and always learning. <strong>Guddi kuch bhi ban sakti hai</strong>, and so can you.</p>
         <p><strong>You don't have to be perfect. You just have to start.</strong></p>
         <div class="bio-ur" dir="rtl" lang="ur">
           <p>گڈی اچھا کرو کا چہرہ ہے — تجسس سے بھرپور، شرارتی، اور ہر دن کچھ نیا سیکھنے والی۔<br>آپ کو پرفیکٹ ہونے کی ضرورت نہیں۔ بس شروعات کرنے کی ضرورت ہے۔</p>
