@@ -200,6 +200,37 @@
     border-left: 3px solid var(--gold); padding-left: 12px;
   }
 
+  /* shown only inside TikTok/Instagram/etc. in-app browsers, which can't install the APK */
+  .inapp-notice {
+    margin-top: 22px;
+    background: rgba(224,178,61,0.14);
+    border: 1px solid rgba(224,178,61,0.5);
+    border-radius: 16px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+  .inapp-notice strong { display: block; color: var(--gold); font-size: 15px; margin-bottom: 4px; }
+  .inapp-notice p { margin: 0; color: var(--text-soft); }
+  .inapp-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .inapp-actions a, .inapp-actions button {
+    font: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+    padding: 9px 16px; border-radius: 100px; text-decoration: none;
+  }
+  .inapp-actions a { background: var(--gold); color: var(--ink-on-gold); border: none; }
+  .inapp-actions button { background: transparent; color: var(--text); border: 1px solid var(--line); }
+
+  .install-guide {
+    margin-top: 22px;
+    background: rgba(246,245,236,0.04);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 12px 16px;
+  }
+  .install-guide summary { cursor: pointer; font-size: 14px; font-weight: 700; color: var(--text); }
+  .install-guide .steps { margin-top: 14px; }
+  .install-guide .disclaimer { margin-top: 4px; margin-bottom: 4px; }
+
   /* STICKER BAND */
   .sticker-band {
     position: relative;
@@ -501,20 +532,29 @@
         <h2>Download Acha Karo</h2>
         <p>Direct APK install — no app store needed.</p>
       </div>
+      <div id="inapp-notice" class="inapp-notice" hidden>
+        <strong id="inapp-title">To download, open this page in Chrome</strong>
+        <p>Tap <b>⋯</b> (top right), then <b>“<span id="inapp-target">Open in browser</span>”</b>.</p>
+        <div class="inapp-actions">
+          <a id="inapp-open-chrome" href="#" hidden>Open in Chrome</a>
+          <button type="button" id="inapp-copy">Copy link</button>
+        </div>
+      </div>
       <div class="cta-row" style="margin-top:22px;">
         <a class="btn-primary" href="https://github.com/musaibnhaseeb-source/acha-karo-releases/releases/download/prod1/app-release.apk">⬇ Get the APK</a>
         <a class="btn-ghost" href="https://acha-karo-pwa.vercel.app">🍎 Use on iPhone (Web)</a>
       </div>
       <p id="pilot-stat" class="disclaimer" style="border-left-color: var(--mint); display:none;"></p>
       <p id="rating-stat" class="disclaimer" style="border-left-color: var(--teal); display:none;"></p>
-      <ol class="steps">
-        <li>Tap the download button above to get the latest APK file.</li>
-        <li>Open your downloaded file from your notifications or Downloads folder.</li>
-        <li>If prompted, allow installs from this source in your phone's settings.</li>
-        <li>Tap Install and wait a few seconds.</li>
-        <li>Open Acha Karo and start logging good deeds!</li>
-      </ol>
-      <p class="disclaimer">Like any app installed outside the Play Store, Android will ask you to confirm once. Tap "Install anyway" to continue.</p>
+      <details id="install-guide" class="install-guide">
+        <summary>How to install on Android (3 steps)</summary>
+        <ol class="steps">
+          <li>Tap “Get the APK”.</li>
+          <li>If Chrome warns “file may be harmful”, tap Download anyway.</li>
+          <li>Open the file, allow “Install unknown apps” for Chrome, then tap Install.</li>
+        </ol>
+        <p class="disclaimer">This warning is normal because we're not on the Play Store yet. Play Store version coming soon.</p>
+      </details>
       <p class="disclaimer">On iPhone? Tap "Use on iPhone (Web)" above instead — it opens the same app right in your browser.</p>
     </div>
     <img class="corner-mascot" src="assets/guddi-action-phone.png" alt="" />
@@ -525,6 +565,54 @@
   <div>Made with ❤️ for a better Pakistan, one good deed at a time.</div>
   <div style="margin-top: 12px; font-weight: 700; color: var(--gold);">@acha.karo.pk</div>
 </footer>
+
+<script>
+// Most visitors arrive from TikTok/Instagram links, whose in-app browsers can't download
+// or install the APK (and can't add the PWA to the iPhone home screen). Detect them by user
+// agent and point people to a real browser. Purely local -- no network calls, nothing stored.
+(function () {
+  var ua = navigator.userAgent || '';
+  var isAndroid = /Android/i.test(ua);
+  var isIOS = /iPhone|iPad|iPod/i.test(ua);
+  var isInApp =
+    /FBAN|FBAV|FB_IAB|FBIOS|Instagram|musical_ly|trill_|BytedanceWebview|TikTok|Snapchat|Line\/|Twitter|LinkedInApp|Pinterest|MicroMessenger/i.test(ua) ||
+    (isAndroid && /; wv\)/.test(ua)) ||
+    (isIOS && !/Safari\//.test(ua));
+
+  var guide = document.getElementById('install-guide');
+  if (guide && isAndroid) guide.open = true;
+
+  if (!isInApp) return;
+  var notice = document.getElementById('inapp-notice');
+  if (!notice) return;
+
+  if (isIOS) {
+    document.getElementById('inapp-title').textContent = 'To install, open this page in Safari';
+  } else if (isAndroid) {
+    // Ask Android to open this same page in Chrome. Some in-app browsers block intent://
+    // links, so the written instruction above stays visible as the fallback.
+    var chromeLink = document.getElementById('inapp-open-chrome');
+    chromeLink.href = 'intent://' + location.host + location.pathname + location.search +
+      '#Intent;scheme=https;package=com.android.chrome;end';
+    chromeLink.hidden = false;
+  }
+
+  var copyBtn = document.getElementById('inapp-copy');
+  copyBtn.addEventListener('click', function () {
+    var link = location.href.split('#')[0] + '#download';
+    var done = function () {
+      copyBtn.textContent = isIOS ? 'Copied — paste it in Safari' : 'Copied — paste it in Chrome';
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(link).then(done, function () { window.prompt('Copy this link:', link); });
+    } else {
+      window.prompt('Copy this link:', link);
+    }
+  });
+
+  notice.hidden = false;
+})();
+</script>
 
 <script>
 (function () {
