@@ -72,6 +72,29 @@
   .part-title { font-size: 26px; margin: 40px 0 6px; scroll-margin-top: 16px; }
   .part-sub { font-size: 14.5px; color: var(--text-soft); margin: 0 0 18px; }
   .group-title { font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--mint); margin: 26px 0 12px; }
+  .faq-group { scroll-margin-top: 16px; }
+
+  /* FAQ search: filters cards in the page only */
+  .faq-search { margin: 14px 0 6px; }
+  .faq-search input {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 13px 18px;
+    color: var(--text);
+    font-size: 16px; /* 16px stops iOS Safari zooming in on focus */
+    font-family: inherit;
+    outline: none;
+  }
+  .faq-search input:focus { border-color: var(--gold); }
+  .faq-search input::placeholder { color: var(--text-soft); }
+  .faq-count { font-size: 13px; color: var(--text-soft); margin: 0 0 12px; min-height: 1em; }
+  .faq-jump { margin-bottom: 10px; }
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
 
   .rule-card {
     background: var(--card);
@@ -197,125 +220,181 @@
   <!-- PART 1: FAQ -->
   <h2 class="part-title" id="faq">FAQ</h2>
 
-  <h3 class="group-title">Installing the app</h3>
-
-  <div class="rule-card">
-    <h3>Why isn't Acha Karo on the Play Store?</h3>
-    <p>Not yet. For now you install it straight from our website (this is called an APK). Lots of new apps start this way. On iPhone, use the web version. It's the same app and works in Safari.</p>
+  <!-- Search is fully local: filters the cards below in the page. Nothing is logged, stored or sent. -->
+  <div class="faq-search">
+    <label for="faq-q" class="visually-hidden">Search the FAQ</label>
+    <input type="search" id="faq-q" placeholder="Search questions…" autocomplete="off" spellcheck="false" />
   </div>
+  <p id="faq-count" class="faq-count" aria-live="polite"></p>
 
-  <div class="rule-card">
-    <h3>Chrome says "file may be harmful". Is it safe?</h3>
-    <p>Yes. Chrome shows this warning for every app that doesn't come from the Play Store, so it doesn't mean anything was found in our file. Tap <strong>Download anyway</strong>.</p>
-    <p>Only download Acha Karo from this website (achakaro.vercel.app) or the link in our Instagram/TikTok bio. Never install a copy someone sends you on WhatsApp or anywhere else.</p>
-    <p>Want to check it yourself? See <a href="#verify" style="color:var(--gold); font-weight:700;">How can I check the app is genuine?</a> below.</p>
-  </div>
+  <nav class="jump faq-jump" aria-label="FAQ sections">
+    <a href="#faq-how">How the app works</a>
+    <a href="#faq-tiers">Tiers</a>
+    <a href="#faq-installing">Installing</a>
+    <a href="#faq-points">Points</a>
+    <a href="#faq-privacy">Privacy</a>
+    <a href="#faq-moderation">Moderation</a>
+    <a href="#faq-guddi">Guddi</a>
+  </nav>
 
-  <div class="rule-card" id="verify">
-    <h3>How can I check the app is genuine?</h3>
-    <ul>
-      <li><strong>Our website is clean:</strong> check achakaro.vercel.app on <a href="https://transparencyreport.google.com/safe-browsing/search?url=achakaro.vercel.app" target="_blank" rel="noopener" style="color:var(--gold); font-weight:700;">Google Safe Browsing →</a></li>
-      <!-- Stays on tag prod1: new APK builds replace prod1/app-release.apk at the same URL (no per-version tags). Keep in sync with the APK URL on index.html. -->
-      <li><strong>Hosted on GitHub:</strong> the APK is downloaded straight from our <a href="https://github.com/musaibnhaseeb-source/acha-karo-releases/releases/tag/prod1" target="_blank" rel="noopener" style="color:var(--gold); font-weight:700;">GitHub release page →</a></li>
-      <li><strong>Antivirus scan:</strong> <span class="placeholder">[PLACEHOLDER: VirusTotal report link for the final v1.3 APK, only once it shows 0 detections]</span></li>
-    </ul>
-    <p style="margin-top:10px;"><span class="placeholder">[PLACEHOLDER, show only once the VirusTotal scan exists: "Easiest check: open the VirusTotal report above. It shows the same SHA-256 as ours."]</span></p>
-    <p><strong>For techies:</strong> SHA-256: <span class="placeholder">[APK_HASH]</span> · Signing cert: <span class="placeholder">[CERT_HASH]</span></p>
-    <p>To check the file, run <code>certutil -hashfile app-release.apk SHA256</code> on Windows or <code>shasum -a 256 app-release.apk</code> on Mac/Linux and compare the result with the SHA-256 above.</p>
-    <p>To check the signing cert, run <code>keytool -printcert -jarfile app-release.apk</code> and compare its SHA-256 fingerprint with the one above.</p>
-  </div>
+  <section class="faq-group" id="faq-how">
+    <h3 class="group-title">How the app works</h3>
 
-  <div class="rule-card">
-    <h3>What does "Install unknown apps" mean?</h3>
-    <p>Android asks you once to allow Chrome to install apps from outside the Play Store. Turn it on for Chrome, install Acha Karo, then you can turn it off again (Settings → Apps → Chrome → Install unknown apps).</p>
-  </div>
+    <div class="rule-card faq-placeholder">
+      <p><span class="placeholder">[PLACEHOLDER: How the app works questions, final copy coming from Marketing v3]</span></p>
+    </div>
+  </section>
 
-  <div class="rule-card">
-    <h3>Play Protect says the app is unrecognised. What do I do?</h3>
-    <p>Play Protect shows this for new apps that aren't on the Play Store yet. Tap <strong>More details → Install anyway</strong>. <span class="placeholder">[CONFIRM: exact button wording on a current Android phone]</span></p>
-  </div>
+  <section class="faq-group" id="faq-tiers">
+    <h3 class="group-title">Tiers</h3>
 
-  <div class="rule-card">
-    <h3>The download button doesn't work from Instagram or TikTok.</h3>
-    <p>Their built-in browsers can't download apps. Tap <strong>⋯</strong> (top right) and choose <strong>Open in browser</strong> (Chrome on Android, Safari on iPhone). Or tap <strong>Copy link</strong> and paste it into Chrome.</p>
-  </div>
+    <div class="rule-card faq-placeholder">
+      <p><span class="placeholder">[PLACEHOLDER: Tiers questions, final copy coming from Marketing v3]</span></p>
+    </div>
+  </section>
 
-  <div class="rule-card">
-    <h3>I have an iPhone.</h3>
-    <p>Tap <strong>Use on iPhone (Web)</strong> in Safari. For an app icon, tap Share → <strong>Add to Home Screen</strong>.</p>
-  </div>
+  <section class="faq-group" id="faq-installing">
+    <h3 class="group-title">Installing the app</h3>
 
-  <div class="rule-card">
-    <h3>How do I update?</h3>
-    <p>Download the latest APK from this page and install it over the old one. Your account and points stay safe because they're saved to your account, not the phone.</p>
-  </div>
+    <div class="rule-card faq-item">
+      <h3>Why isn't Acha Karo on the Play Store?</h3>
+      <p>Not yet. For now you install it straight from our website (this is called an APK). Lots of new apps start this way. On iPhone, use the web version. It's the same app and works in Safari.</p>
+    </div>
 
-  <h3 class="group-title">Points</h3>
+    <div class="rule-card faq-item">
+      <h3>Chrome says "file may be harmful". Is it safe?</h3>
+      <p>Yes. Chrome shows this warning for every app that doesn't come from the Play Store, so it doesn't mean anything was found in our file. Tap <strong>Download anyway</strong>.</p>
+      <p>Only download Acha Karo from this website (achakaro.vercel.app) or the link in our Instagram/TikTok bio. Never install a copy someone sends you on WhatsApp or anywhere else.</p>
+      <p>Want to check it yourself? See <a href="#verify" style="color:var(--gold); font-weight:700;">How can I check the app is genuine?</a> below.</p>
+    </div>
 
-  <div class="rule-card">
-    <h3>What are Acha Karo points?</h3>
-    <p>Points show the acha kaam you've done. They're <strong>in-app points only, have no cash value, and no purchase is ever needed</strong>. You can't sell, swap, transfer or cash them out.</p>
-  </div>
+    <div class="rule-card faq-item" id="verify">
+      <h3>How can I check the app is genuine?</h3>
+      <ul>
+        <li><strong>Our website is clean:</strong> check achakaro.vercel.app on <a href="https://transparencyreport.google.com/safe-browsing/search?url=achakaro.vercel.app" target="_blank" rel="noopener" style="color:var(--gold); font-weight:700;">Google Safe Browsing →</a></li>
+        <!-- Stays on tag prod1: new APK builds replace prod1/app-release.apk at the same URL (no per-version tags). Keep in sync with the APK URL on index.html. -->
+        <li><strong>Hosted on GitHub:</strong> the APK is downloaded straight from our <a href="https://github.com/musaibnhaseeb-source/acha-karo-releases/releases/tag/prod1" target="_blank" rel="noopener" style="color:var(--gold); font-weight:700;">GitHub release page →</a></li>
+        <li><strong>Antivirus scan:</strong> <span class="placeholder">[PLACEHOLDER: VirusTotal report link for the final v1.3 APK, only once it shows 0 detections]</span></li>
+      </ul>
+      <p style="margin-top:10px;"><span class="placeholder">[PLACEHOLDER, show only once the VirusTotal scan exists: "Easiest check: open the VirusTotal report above. It shows the same SHA-256 as ours."]</span></p>
+      <p><strong>For techies:</strong> SHA-256: <span class="placeholder">[APK_HASH]</span> · Signing cert: <span class="placeholder">[CERT_HASH]</span></p>
+      <p>To check the file, run <code>certutil -hashfile app-release.apk SHA256</code> on Windows or <code>shasum -a 256 app-release.apk</code> on Mac/Linux and compare the result with the SHA-256 above.</p>
+      <p>To check the signing cert, run <code>keytool -printcert -jarfile app-release.apk</code> and compare its SHA-256 fingerprint with the one above.</p>
+    </div>
 
-  <div class="rule-card">
-    <h3>How do I earn points?</h3>
-    <p>Do an acha kaam, add a photo in the app, and our team checks it. Once it's approved, your points appear on your profile and the leaderboard.</p>
-  </div>
+    <div class="rule-card faq-item">
+      <h3>What does "Install unknown apps" mean?</h3>
+      <p>Android asks you once to allow Chrome to install apps from outside the Play Store. Turn it on for Chrome, install Acha Karo, then you can turn it off again (Settings → Apps → Chrome → Install unknown apps).</p>
+    </div>
 
-  <div class="rule-card">
-    <h3>Why hasn't my acha kaam been approved yet?</h3>
-    <p>A real person checks every submission, so it can take a little time. <span class="placeholder">[CONFIRM: typical review time, e.g. "within 24–48 hours"]</span> If it's rejected, you can try again with a clearer photo.</p>
-  </div>
+    <div class="rule-card faq-item">
+      <h3>Play Protect says the app is unrecognised. What do I do?</h3>
+      <p>Play Protect shows this for new apps that aren't on the Play Store yet. Tap <strong>More details → Install anyway</strong>. <span class="placeholder">[CONFIRM: exact button wording on a current Android phone]</span></p>
+    </div>
 
-  <div class="rule-card">
-    <h3>Can I lose points?</h3>
-    <p>Yes, if a submission turns out to be fake, copied, or broke the rules (see the <a href="#terms" style="color:var(--gold); font-weight:700;">Terms</a> below).</p>
-  </div>
+    <div class="rule-card faq-item">
+      <h3>The download button doesn't work from Instagram or TikTok.</h3>
+      <p>Their built-in browsers can't download apps. Tap <strong>⋯</strong> (top right) and choose <strong>Open in browser</strong> (Chrome on Android, Safari on iPhone). Or tap <strong>Copy link</strong> and paste it into Chrome.</p>
+    </div>
 
-  <h3 class="group-title">Privacy</h3>
+    <div class="rule-card faq-item">
+      <h3>I have an iPhone.</h3>
+      <p>Tap <strong>Use on iPhone (Web)</strong> in Safari. For an app icon, tap Share → <strong>Add to Home Screen</strong>.</p>
+    </div>
 
-  <div class="rule-card">
-    <h3>What do you collect?</h3>
-    <ul>
-      <li><strong>Profile:</strong> name, gender, date of birth and city (required). Phone number (optional).</li>
-      <li><strong>Profile photo (optional):</strong> stays on your phone and is never uploaded.</li>
-      <li><strong>Acha kaam photos:</strong> uploaded so our team can check them.</li>
-      <li><strong>Location:</strong> when you submit an acha kaam, your phone's location at that moment is saved with it, so our team can check it's real. Only our review team sees it; it's never shown to other users. <span class="placeholder">[CONFIRM: retention wording, Musa deciding]</span></li>
-    </ul>
-  </div>
+    <div class="rule-card faq-item">
+      <h3>How do I update?</h3>
+      <p>Download the latest APK from this page and install it over the old one. Your account and points stay safe because they're saved to your account, not the phone.</p>
+    </div>
+  </section>
 
-  <div class="rule-card">
-    <h3>Who can see my information?</h3>
-    <p>Other users see your <strong>name (as you typed it when you signed up), city, points and badge count</strong> on the leaderboard. Your acha kaam photos and location are seen only by our review team. We never sell your data, and we don't run ads.</p>
-    <p><span class="placeholder">[CONFIRM: leaderboard name display, Musa deciding]</span></p>
-  </div>
+  <section class="faq-group" id="faq-points">
+    <h3 class="group-title">Points</h3>
 
-  <div class="rule-card">
-    <h3>How do I delete my account?</h3>
-    <p>In the app, go to Settings → <strong>Delete account</strong> and tell us why. Our team then deletes your account and data. <span class="placeholder">[CONFIRM: how long it takes, and whether anything is kept, e.g. approved acha kaam records]</span></p>
-  </div>
 
-  <h3 class="group-title">Moderation</h3>
+    <div class="rule-card faq-item">
+      <h3>What are Acha Karo points?</h3>
+      <p>Points show the acha kaam you've done. They're <strong>in-app points only, have no cash value, and no purchase is ever needed</strong>. You can't sell, swap, transfer or cash them out.</p>
+    </div>
 
-  <div class="rule-card">
-    <h3>Who checks acha kaam?</h3>
-    <p>The Acha Karo team. We check that the photo matches the acha kaam and that it's real.</p>
-  </div>
+    <div class="rule-card faq-item">
+      <h3>How do I earn points?</h3>
+      <p>Do an acha kaam, add a photo in the app, and our team checks it. Once it's approved, your points appear on your profile and the leaderboard.</p>
+    </div>
 
-  <div class="rule-card">
-    <h3>What gets rejected?</h3>
-    <ul>
-      <li>Photos copied from the internet or someone else.</li>
-      <li>The same photo submitted twice.</li>
-      <li>Staged or fake acha kaam.</li>
-      <li>Anything showing another person's face or private details without their permission.</li>
-      <li>Anything unsafe, hateful or inappropriate.</li>
-    </ul>
-  </div>
+    <div class="rule-card faq-item">
+      <h3>Why hasn't my acha kaam been approved yet?</h3>
+      <p>A real person checks every submission, so it can take a little time. <span class="placeholder">[CONFIRM: typical review time, e.g. "within 24–48 hours"]</span> If it's rejected, you can try again with a clearer photo.</p>
+    </div>
 
-  <div class="rule-card">
-    <h3>Should I show people I helped?</h3>
-    <p>Please don't. Respect people's dignity: photograph the acha kaam, not the person receiving help, and never show a child's face.</p>
+    <div class="rule-card faq-item">
+      <h3>Can I lose points?</h3>
+      <p>Yes, if a submission turns out to be fake, copied, or broke the rules (see the <a href="#terms" style="color:var(--gold); font-weight:700;">Terms</a> below).</p>
+    </div>
+  </section>
+
+  <section class="faq-group" id="faq-privacy">
+    <h3 class="group-title">Privacy</h3>
+
+
+    <div class="rule-card faq-item">
+      <h3>What do you collect?</h3>
+      <ul>
+        <li><strong>Profile:</strong> name, gender, date of birth and city (required). Phone number (optional).</li>
+        <li><strong>Profile photo (optional):</strong> stays on your phone and is never uploaded.</li>
+        <li><strong>Acha kaam photos:</strong> uploaded so our team can check them.</li>
+        <li><strong>Location:</strong> when you submit an acha kaam, your phone's location at that moment is saved with it, so our team can check it's real. Only our review team sees it; it's never shown to other users. <span class="placeholder">[CONFIRM: retention wording, Musa deciding]</span></li>
+      </ul>
+    </div>
+
+    <div class="rule-card faq-item">
+      <h3>Who can see my information?</h3>
+      <p>Other users see your <strong>name (as you typed it when you signed up), city, points and badge count</strong> on the leaderboard. Your acha kaam photos and location are seen only by our review team. We never sell your data, and we don't run ads.</p>
+      <p><span class="placeholder">[CONFIRM: leaderboard name display, Musa deciding]</span></p>
+    </div>
+
+    <div class="rule-card faq-item">
+      <h3>How do I delete my account?</h3>
+      <p>In the app, go to Settings → <strong>Delete account</strong> and tell us why. Our team then deletes your account and data. <span class="placeholder">[CONFIRM: how long it takes, and whether anything is kept, e.g. approved acha kaam records]</span></p>
+    </div>
+  </section>
+
+  <section class="faq-group" id="faq-moderation">
+    <h3 class="group-title">Moderation</h3>
+
+
+    <div class="rule-card faq-item">
+      <h3>Who checks acha kaam?</h3>
+      <p>The Acha Karo team. We check that the photo matches the acha kaam and that it's real.</p>
+    </div>
+
+    <div class="rule-card faq-item">
+      <h3>What gets rejected?</h3>
+      <ul>
+        <li>Photos copied from the internet or someone else.</li>
+        <li>The same photo submitted twice.</li>
+        <li>Staged or fake acha kaam.</li>
+        <li>Anything showing another person's face or private details without their permission.</li>
+        <li>Anything unsafe, hateful or inappropriate.</li>
+      </ul>
+    </div>
+
+    <div class="rule-card faq-item">
+      <h3>Should I show people I helped?</h3>
+      <p>Please don't. Respect people's dignity: photograph the acha kaam, not the person receiving help, and never show a child's face.</p>
+    </div>
+  </section>
+
+  <section class="faq-group" id="faq-guddi">
+    <h3 class="group-title">Guddi</h3>
+
+    <div class="rule-card faq-placeholder">
+      <p><span class="placeholder">[PLACEHOLDER: Guddi questions, final copy coming from Marketing v3]</span></p>
+    </div>
+  </section>
+
+  <div id="faq-empty" class="rule-card faq-empty" hidden>
+    <p>No questions match that. <a href="#contact" style="color:var(--gold); font-weight:700;">Ask us directly →</a></p>
   </div>
 
   <!-- PART 2: CONTACT (moved from index.html; table, field names and payload unchanged) -->
@@ -437,6 +516,50 @@
   <div style="margin-top: 12px; font-weight: 700; color: var(--gold);">@acha.karo.pk</div>
   <div class="footer-links"><a href="index.html">Home</a> · <a href="rules.html">Launch Bonus Rules</a></div>
 </footer>
+
+<script>
+// FAQ search. Filters the cards on this page as you type. The search text never leaves the
+// page: no network calls, no storage, no URL changes, no logging.
+(function () {
+  var input = document.getElementById('faq-q');
+  var count = document.getElementById('faq-count');
+  var empty = document.getElementById('faq-empty');
+  var jump = document.querySelector('.faq-jump');
+  var groups = Array.prototype.slice.call(document.querySelectorAll('.faq-group'));
+
+  function norm(t) { return (t || '').toLowerCase().replace(/\s+/g, ' '); }
+
+  // Index each question once: visible text plus optional data-keywords (e.g. Roman Urdu synonyms).
+  var items = Array.prototype.slice.call(document.querySelectorAll('.faq-item')).map(function (el) {
+    return { el: el, text: norm(el.textContent + ' ' + (el.getAttribute('data-keywords') || '')) };
+  });
+
+  function run() {
+    var words = norm(input.value).trim().split(' ').filter(Boolean);
+    var searching = words.length > 0;
+    var shown = 0;
+
+    items.forEach(function (it) {
+      var match = !searching || words.every(function (w) { return it.text.indexOf(w) !== -1; });
+      it.el.hidden = !match;
+      if (match) shown++;
+    });
+
+    groups.forEach(function (g) {
+      // placeholder-only sections are hidden while searching
+      g.querySelectorAll('.faq-placeholder').forEach(function (p) { p.hidden = searching; });
+      g.hidden = searching && !g.querySelector('.faq-item:not([hidden])');
+    });
+
+    jump.hidden = searching;
+    empty.hidden = !searching || shown > 0;
+    count.textContent = !searching ? '' : shown === 0 ? '' :
+      shown + (shown === 1 ? ' question matches' : ' questions match');
+  }
+
+  input.addEventListener('input', run);
+})();
+</script>
 
 <script>
 // Contact Us form, moved here from index.html. The table, field names, payload and headers are
