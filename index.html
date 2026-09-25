@@ -132,7 +132,8 @@
   .inapp-actions button { background: transparent; color: var(--text); border: 1px solid var(--line); }
 
   /* SECTIONS: about 56px apart */
-  section { position: relative; z-index: 1; padding: 56px 24px; }
+  /* 28px top + 28px bottom = ~56px between sections */
+  section { position: relative; z-index: 1; padding: 28px 24px; }
   .section-head { text-align: center; margin-bottom: 26px; }
   .section-head h2 { font-size: 30px; margin: 0 0 10px; }
   .section-head p { color: var(--text-soft); font-size: 15px; margin: 0; }
@@ -152,18 +153,11 @@
   .get-surface a { color: var(--gold); font-weight: 700; }
   .get-surface .stat { color: var(--text); font-weight: 700; }
   .get-surface .microline { font-size: 13px; }
-  .get-row { border-top: 1px solid var(--line); padding: 12px 0; margin: 0; }
-  .get-row + .get-row { margin-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .get-row { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 0; margin: 0 0 14px; }
   .get-row summary { cursor: pointer; font-size: 14px; font-weight: 700; color: var(--text); }
   .get-row ol { margin: 10px 0 4px; padding-left: 20px; }
   .get-row li { font-size: 13.5px; color: var(--text-soft); margin-bottom: 6px; line-height: 1.55; }
   .get-surface .get-row p { font-size: 13px; margin: 6px 0 0; }
-  .techies p { word-break: break-all; }
-  /* open item that must be filled in before shipping */
-  .placeholder {
-    color: var(--gold); font-weight: 700;
-    border: 1px dashed rgba(224,178,61,0.7); border-radius: 6px; padding: 1px 6px;
-  }
 
   /* HOW IT WORKS: one numbered list in a single block */
   .how-head { display: flex; align-items: center; justify-content: center; gap: 14px; }
@@ -186,6 +180,7 @@
 
   /* MEET GUDDI */
   .sticker-band {
+    padding: 56px 24px; /* coloured band: keep the card well inside its edges */
     background: var(--bg2);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
@@ -201,7 +196,7 @@
     grid-template-columns: auto 1fr;
     gap: 28px;
     align-items: center;
-    background: rgba(7, 27, 17, 0.8);
+    background: var(--bg); /* solid, so the stickers peeking over the top stay behind it */
     border: 1px solid var(--line);
     border-radius: 28px;
     padding: 30px 32px;
@@ -236,11 +231,12 @@
   .s5 { width: 70px; top: 40%; left: -1%; transform: rotate(-16deg); opacity: 0.6; }
   .s6 { width: 64px; bottom: -24px; right: 10%; transform: rotate(-8deg); opacity: 0.6; }
   .s7 { width: 72px; top: 38%; right: -1%; transform: rotate(14deg); opacity: 0.55; }
-  .s8 { width: 92px; bottom: -40px; left: 18%; transform: rotate(6deg); opacity: 0.5; }
-  .s9 { width: 80px; bottom: -40px; right: 20%; transform: rotate(-8deg); opacity: 0.5; }
+  /* the two Guddi stickers peek over the top edge of the Meet Guddi card (desktop only) */
+  .s8 { width: 80px; top: -52px; left: 30%; transform: rotate(-6deg); opacity: 0.9; }
+  .s9 { width: 58px; top: -56px; right: 30%; transform: rotate(6deg); opacity: 0.9; }
 
   /* MINI FAQ */
-  .faq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1080px; margin: 0 auto; }
+  .faq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1080px; margin: 0 auto; }
   .faq-card {
     display: block;
     background: var(--card);
@@ -306,7 +302,7 @@
     .hero-mascot { order: -1; margin-bottom: 6px; }
     .hero-mascot img.main-visual { width: 176px; padding: 143px 79px 118px 75px; }
     .floating-logo { width: 68px; height: 68px; border-radius: 18px; top: -4%; right: 10%; }
-    .faq-grid { grid-template-columns: 1fr; gap: 12px; }
+    .faq-grid { grid-template-columns: 1fr; gap: 24px; }
   }
   @media (max-width: 640px) {
     header { padding: 16px; }
@@ -323,15 +319,16 @@
     .eyebrow { margin-bottom: 12px; }
     h1 { margin-bottom: 12px; }
     .hero p.lead { font-size: 15.5px; margin-bottom: 18px; }
-    section { padding: 56px 16px 0; }
-    .get { padding-top: 16px; }
+    section { padding: 28px 16px; }
+    .sticker-band { padding: 56px 16px; }
+    .get { padding-top: 20px; }
     .get-surface, .how-list { padding: 18px; }
     .section-head h2 { font-size: 24px; }
     .sticker { display: none; }
     .guddi-card { grid-template-columns: 1fr; text-align: left; padding: 22px 18px; gap: 12px; }
     .guddi-card > img { width: 110px; }
     .bio-ur p { font-size: 17px; }
-    footer { padding-top: 56px; }
+    footer { padding-top: 28px; }
   }
 </style>
 <script>
@@ -389,10 +386,7 @@
     <p id="rating-stat" class="stat" style="display:none;"></p>
     <p class="microline">Free · 14+ · no purchase needed · no cash value</p>
     <!-- VirusTotal line: stays hidden until VIRUSTOTAL_REPORT_URL (script below) is set -->
-    <p id="vt-line" hidden>
-      ✅ Checked by 70+ antivirus engines. <a id="vt-link" href="#" target="_blank" rel="noopener">See the live report →</a><br>
-      <span lang="ur-Latn">✅ 70+ antivirus se check shuda. <a id="vt-link-ur" href="#" target="_blank" rel="noopener">Report khud dekhein →</a></span>
-    </p>
+    <p id="vt-line" hidden>🛡️ Checked by 70+ antivirus engines. <a id="vt-link" href="#" target="_blank" rel="noopener">See the live report →</a></p>
     <p>Only download Acha Karo from this page or our Instagram/TikTok bio.<br>
       <span lang="ur-Latn">Sirf isi page ya hamare IG/TikTok bio se download karein.</span></p>
     <p>Chrome warns about every app that isn't from the Play Store yet. It doesn't mean anything was found in our file.<br>
@@ -405,10 +399,6 @@
         <li>Open the file, allow “Install unknown apps” for Chrome, then tap Install.</li>
       </ol>
       <p>If Play Protect asks, tap More details → Install anyway.</p>
-    </details>
-    <details class="get-row techies">
-      <summary>For techies</summary>
-      <p>SHA-256: <code>6bd4d8efb4c9646edce0a675e2fb355d970c1ec5121bc9b06f3b97b138bdf351</code> · Signing cert: <code>1D:00:5D:8F:96:C5:D8:AA:90:32:9F:0E:75:25:F8:A0:50:8C:FC:E8:A3:39:C2:EA:F3:84:15:5C:55:56:DF:60</code> · <a href="help.html#verify">How to check →</a></p>
     </details>
     <p><a id="cta-secondary" href="https://acha-karo-pwa.vercel.app">On iPhone? Open the web app →</a></p>
   </div>
@@ -614,7 +604,6 @@
   var VIRUSTOTAL_REPORT_URL = 'https://www.virustotal.com/gui/file/6bd4d8efb4c9646edce0a675e2fb355d970c1ec5121bc9b06f3b97b138bdf351';
   if (VIRUSTOTAL_REPORT_URL) {
     document.getElementById('vt-link').href = VIRUSTOTAL_REPORT_URL;
-    document.getElementById('vt-link-ur').href = VIRUSTOTAL_REPORT_URL;
     document.getElementById('vt-line').hidden = false;
   }
 
