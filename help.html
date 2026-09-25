@@ -285,7 +285,7 @@
       <div class="a">
         <p>Yes. Chrome shows this for every app that doesn't come from the Play Store. It doesn't mean anything was found in our file. Tap <strong>Download anyway</strong>.</p>
         <p>Only download Acha Karo from this website or the link in our Instagram/TikTok bio. Never install a copy someone sends you on WhatsApp or anywhere else.</p>
-        <p><span class="ph">VirusTotal report + SHA-256: added after the v1.3 APK is rebuilt and the scan shows 0 detections</span> See <a href="#verify">How can I check the app is genuine?</a></p>
+        <p>Want to check it yourself? See <a href="#verify">How can I check the app is genuine?</a></p>
       </div>
     </details>
     <details class="qa" data-keywords="install, download, lagana, lagaen, unknown sources, unknown apps, settings, permission, ijazat, allow, instal, instll">
@@ -316,9 +316,11 @@
           <li><strong>Our website is clean:</strong> check achakaro.vercel.app on <a href="https://transparencyreport.google.com/safe-browsing/search?url=achakaro.vercel.app" target="_blank" rel="noopener">Google Safe Browsing →</a></li>
           <!-- Stays on tag prod1: new APK builds replace prod1/app-release.apk at the same URL (no per-version tags). Keep in sync with the APK URL on index.html. -->
           <li><strong>Hosted on GitHub:</strong> the APK is downloaded straight from our <a href="https://github.com/musaibnhaseeb-source/acha-karo-releases/releases/tag/prod1" target="_blank" rel="noopener">GitHub release page →</a></li>
-          <li><strong>Antivirus scan:</strong> <span class="ph">[PLACEHOLDER: VirusTotal report link for the final v1.3 APK, only once it shows 0 detections]</span></li>
+          <!-- VIRUSTOTAL (only with a clean report, 0 detections): add
+               <li><strong>Antivirus scan:</strong> <a href="VT_URL" target="_blank" rel="noopener">VirusTotal report →</a></li> -->
         </ul>
-        <p><span class="ph">[PLACEHOLDER, show only once the VirusTotal scan exists: "Easiest check: open the VirusTotal report above. It shows the same SHA-256 as ours."]</span></p>
+        <!-- VIRUSTOTAL (only with a clean report): add
+             <p>Easiest check: open the VirusTotal report above. It shows the same SHA-256 as ours.</p> -->
         <p><strong>For techies:</strong> SHA-256: <span class="ph">[APK_HASH]</span> · Signing cert: <span class="ph">[CERT_HASH]</span></p>
         <p>To check the file, run <code>certutil -hashfile app-release.apk SHA256</code> on Windows or <code>shasum -a 256 app-release.apk</code> on Mac/Linux and compare the result with the SHA-256 above.</p>
         <p>To check the signing cert, run <code>keytool -printcert -jarfile app-release.apk</code> and compare its SHA-256 fingerprint with the one above.</p>
