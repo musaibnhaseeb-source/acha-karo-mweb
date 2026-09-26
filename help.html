@@ -316,11 +316,11 @@
           <li><strong>Our website is clean:</strong> check achakaro.vercel.app on <a href="https://transparencyreport.google.com/safe-browsing/search?url=achakaro.vercel.app" target="_blank" rel="noopener">Google Safe Browsing →</a></li>
           <!-- Stays on tag prod1: new APK builds replace prod1/app-release.apk at the same URL (no per-version tags). Keep in sync with the APK URL on index.html. -->
           <li><strong>Hosted on GitHub:</strong> the APK is downloaded straight from our <a href="https://github.com/musaibnhaseeb-source/acha-karo-releases/releases/tag/prod1" target="_blank" rel="noopener">GitHub release page →</a></li>
-          <!-- VirusTotal: final v1.3 APK, clean (0 detections), confirmed by Musa 2026-09-25. Same URL as VIRUSTOTAL_REPORT_URL on index.html. -->
-          <li><strong>Antivirus scan:</strong> <a href="https://www.virustotal.com/gui/file/6bd4d8efb4c9646edce0a675e2fb355d970c1ec5121bc9b06f3b97b138bdf351" target="_blank" rel="noopener">VirusTotal report →</a></li>
+          <!-- VirusTotal: v1.3 APK (frozen-badge fix rebuild), link from Musa 2026-09-26. Same URL as VIRUSTOTAL_REPORT_URL on index.html. -->
+          <li><strong>Antivirus scan:</strong> <a href="https://www.virustotal.com/gui/file/c8ffa2bd929c7a4c0717296830d2a9f375347a8f2a743c9cfab8e2ceb9f036d3" target="_blank" rel="noopener">VirusTotal report →</a></li>
         </ul>
         <p>Easiest check: open the VirusTotal report above. It shows the same SHA-256 as ours.</p>
-        <p><strong>For techies:</strong> SHA-256: <code>6bd4d8efb4c9646edce0a675e2fb355d970c1ec5121bc9b06f3b97b138bdf351</code> · Signing cert: <code>1D:00:5D:8F:96:C5:D8:AA:90:32:9F:0E:75:25:F8:A0:50:8C:FC:E8:A3:39:C2:EA:F3:84:15:5C:55:56:DF:60</code></p>
+        <p><strong>For techies:</strong> SHA-256: <code>c8ffa2bd929c7a4c0717296830d2a9f375347a8f2a743c9cfab8e2ceb9f036d3</code> · Signing cert: <code>1D:00:5D:8F:96:C5:D8:AA:90:32:9F:0E:75:25:F8:A0:50:8C:FC:E8:A3:39:C2:EA:F3:84:15:5C:55:56:DF:60</code></p>
         <p>To check the file, run <code>certutil -hashfile app-release.apk SHA256</code> on Windows or <code>shasum -a 256 app-release.apk</code> on Mac/Linux and compare the result with the SHA-256 above.</p>
         <p>To check the signing cert, run <code>keytool -printcert -jarfile app-release.apk</code> and compare its SHA-256 fingerprint with the one above.</p>
       </div>
