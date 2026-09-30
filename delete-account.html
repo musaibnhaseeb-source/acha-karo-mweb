@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Delete Your Account — Acha Karo</title>
+<meta name="description" content="How to delete your Acha Karo account and data, in the app or without it.">
+<!-- No third-party scripts, fonts, analytics or trackers on this page. -->
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #071b11;
+    --card: #0f2d1c;
+    --card-strong: #143823;
+    --line: rgba(246, 245, 236, 0.14);
+    --text: #f6f5ec;
+    --text-soft: rgba(246, 245, 236, 0.72);
+    --gold: #e0b23d;
+    --ink-on-gold: #16301f;
+    --warn-line: rgba(224, 178, 61, 0.55);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  a { color: var(--gold); font-weight: 700; overflow-wrap: anywhere; }
+
+  header { display: flex; align-items: center; justify-content: space-between; padding: 22px 24px; max-width: 820px; margin: 0 auto; }
+  .brand { display: flex; align-items: center; gap: 12px; font-weight: 900; font-size: 26px; color: var(--gold); text-decoration: none; }
+  .brand-badge { width: 44px; height: 44px; border-radius: 12px; overflow: hidden; flex-shrink: 0; }
+  .brand-badge img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .nav-cta { background: var(--gold); color: var(--ink-on-gold); padding: 8px 18px; border-radius: 100px; font-weight: 700; font-size: 13.5px; text-decoration: none; }
+
+  main { max-width: 820px; margin: 0 auto; padding: 20px 24px 40px; }
+  .eyebrow { display: inline-block; background: rgba(224, 178, 61, 0.14); border: 1px solid rgba(224, 178, 61, 0.35); color: var(--gold); font-size: 12.5px; font-weight: 700; padding: 6px 14px; border-radius: 100px; margin-bottom: 18px; }
+  h1 { font-size: 38px; line-height: 1.15; margin: 0 0 14px; }
+  h1 span { color: var(--gold); }
+  .lead { font-size: 16px; color: var(--text-soft); margin: 0 0 22px; max-width: 62ch; }
+
+  .block { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px; margin-bottom: 24px; scroll-margin-top: 16px; }
+  .block h2 { margin: 0 0 10px; font-size: 21px; color: var(--gold); }
+  .block p, .block li { color: var(--text-soft); font-size: 14.5px; }
+  .block p { margin: 0 0 8px; }
+  .block p:last-child { margin-bottom: 0; }
+  .block ul { margin: 0 0 8px; padding-left: 20px; }
+  .block li { margin-bottom: 4px; }
+  .block strong { color: var(--text); }
+
+  .steps { margin: 4px 0 10px; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 8px; }
+  .steps li { counter-increment: s; background: var(--card-strong); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px 10px 44px; font-size: 14.5px; color: var(--text); margin: 0; position: relative; }
+  .steps li::before { content: counter(s); position: absolute; left: 12px; top: 11px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--gold); color: var(--ink-on-gold); font-weight: 800; font-size: 12px; }
+
+  /* open items that must be filled in before this page ships */
+  .ph { background: rgba(224,178,61,0.18); border: 1px dashed var(--warn-line); color: var(--gold); border-radius: 6px; padding: 0 6px; font-size: 13px; font-weight: 600; }
+  .ph-block { border: 1px dashed var(--warn-line); border-radius: 12px; padding: 12px 14px; color: var(--gold); font-size: 13.5px; }
+
+  footer { text-align: center; padding: 30px 24px 50px; color: var(--text-soft); font-size: 13px; }
+  footer .footer-links { margin-top: 12px; }
+  footer .footer-links a { color: var(--text-soft); font-weight: 400; margin: 0 8px; }
+
+  @media (max-width: 640px) {
+    header { padding: 18px 16px; }
+    .brand { font-size: 22px; }
+    main { padding: 10px 16px 30px; }
+    h1 { font-size: 28px; }
+  }
+  @media (max-width: 480px) { .block { padding: 18px; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="index.html">
+    <div class="brand-badge"><img src="assets/logo.jpg" alt="Acha Karo logo" /></div>
+    Acha Karo
+  </a>
+  <a class="nav-cta" href="help.html">Help</a>
+</header>
+
+<main>
+  <span class="eyebrow">🗑️ Delete account</span>
+  <h1>Delete your <span>Acha Karo</span> account</h1>
+  <p class="lead">You can ask us to delete your Acha Karo account and its data at any time, from inside the app or from this page. We complete every request <strong>within 30 days</strong>.</p>
+
+  <section class="block" id="in-app">
+    <h2>Option 1: In the app</h2>
+    <ol class="steps">
+      <li>Open Acha Karo and log in.</li>
+      <li>Go to <strong>Settings</strong> → <strong>Delete account</strong>.</li>
+      <li>Tell us why, if you'd like to, and confirm.</li>
+    </ol>
+  </section>
+
+  <section class="block" id="web">
+    <h2>Option 2: Without the app</h2>
+    <!-- WEB ROUTE PENDING: Supervisor to choose (a) contact-form reuse or (b) mailto. Collect only the account email + optional reason. -->
+    <p class="ph-block">[WEB ROUTE — waiting for Supervisor approval: email link or form]</p>
+    <p>Send the request from the email address you use to log in to Acha Karo. We'll check it's really you before deleting anything.</p>
+  </section>
+
+  <section class="block" id="deleted">
+    <h2>What gets deleted</h2>
+    <ul>
+      <li>Your account and login email</li>
+      <li>Your profile: name, city, gender, date of birth and phone number</li>
+      <li>All your acha kaam, including their photos and locations</li>
+      <li>Your points and badges, and your place on the leaderboard</li>
+      <li>Your friends and invites, and the feedback you've sent from the app</li>
+    </ul>
+  </section>
+
+  <section class="block" id="kept">
+    <h2>What we may keep for a short time</h2>
+    <ul>
+      <li><strong>A record of your deletion request</strong> (the email address and date), so we can show the request was handled. <span class="ph">[HOW LONG — to confirm]</span></li>
+      <li><strong>Contact form messages</strong> you sent through our website are kept for up to 3 months, then deleted.</li>
+      <li><span class="ph">[MODERATION RECORDS, if any — to confirm what is kept, why, and for how long]</span></li>
+    </ul>
+    <p>Everything else is deleted within 30 days of your request.</p>
+  </section>
+
+  <section class="block">
+    <h2>Questions?</h2>
+    <p>Email <span class="ph">[PRIVACY CONTACT EMAIL]</span>, or read our <a href="privacy.html">Privacy Policy</a>.</p>
+  </section>
+</main>
+
+<footer>
+  <div>Made with ❤️ for a better Pakistan, one good deed at a time.</div>
+  <div style="margin-top: 12px; font-weight: 700; color: var(--gold);">@acha.karo.pk</div>
+  <div class="footer-links"><a href="index.html">Home</a> · <a href="help.html">Help &amp; Terms</a> · <a href="privacy.html">Privacy</a></div>
+</footer>
+
+</body>
+</html>

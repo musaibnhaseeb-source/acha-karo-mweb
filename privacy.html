@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy — Acha Karo</title>
+<meta name="description" content="What the Acha Karo app and website collect, who can see it, and how to delete your account.">
+<!-- No third-party scripts, fonts, analytics or trackers on this page. -->
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #071b11;
+    --card: #0f2d1c;
+    --card-strong: #143823;
+    --line: rgba(246, 245, 236, 0.14);
+    --text: #f6f5ec;
+    --text-soft: rgba(246, 245, 236, 0.72);
+    --gold: #e0b23d;
+    --ink-on-gold: #16301f;
+    --warn-line: rgba(224, 178, 61, 0.55);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  a { color: var(--gold); font-weight: 700; overflow-wrap: anywhere; }
+
+  header { display: flex; align-items: center; justify-content: space-between; padding: 22px 24px; max-width: 820px; margin: 0 auto; }
+  .brand { display: flex; align-items: center; gap: 12px; font-weight: 900; font-size: 26px; color: var(--gold); text-decoration: none; }
+  .brand-badge { width: 44px; height: 44px; border-radius: 12px; overflow: hidden; flex-shrink: 0; }
+  .brand-badge img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .nav-cta { background: var(--gold); color: var(--ink-on-gold); padding: 8px 18px; border-radius: 100px; font-weight: 700; font-size: 13.5px; text-decoration: none; }
+
+  main { max-width: 820px; margin: 0 auto; padding: 20px 24px 40px; }
+  .eyebrow { display: inline-block; background: rgba(224, 178, 61, 0.14); border: 1px solid rgba(224, 178, 61, 0.35); color: var(--gold); font-size: 12.5px; font-weight: 700; padding: 6px 14px; border-radius: 100px; margin-bottom: 18px; }
+  h1 { font-size: 38px; line-height: 1.15; margin: 0 0 14px; }
+  h1 span { color: var(--gold); }
+  .lead { font-size: 16px; color: var(--text-soft); margin: 0 0 8px; max-width: 62ch; }
+  .updated { font-size: 13px; color: var(--text-soft); margin: 0 0 22px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 26px; }
+  .chips a { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--text); border: 1px solid var(--line); border-radius: 100px; padding: 5px 12px; }
+  .chips a:hover, .chips a:focus-visible { border-color: var(--gold); color: var(--gold); }
+
+  .block { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px; margin-bottom: 24px; scroll-margin-top: 16px; }
+  .block h2 { margin: 0 0 10px; font-size: 21px; color: var(--gold); }
+  .block h3 { font-size: 15.5px; margin: 16px 0 4px; color: var(--text); }
+  .block p, .block li { color: var(--text-soft); font-size: 14.5px; }
+  .block p { margin: 0 0 8px; }
+  .block ul { margin: 0 0 8px; padding-left: 20px; }
+  .block li { margin-bottom: 4px; }
+  .block strong { color: var(--text); }
+  .summary { background: linear-gradient(135deg, var(--card-strong), var(--card)); }
+
+  /* open items that must be filled in before this page ships */
+  .ph { background: rgba(224,178,61,0.18); border: 1px dashed var(--warn-line); color: var(--gold); border-radius: 6px; padding: 0 6px; font-size: 13px; font-weight: 600; }
+
+  footer { text-align: center; padding: 30px 24px 50px; color: var(--text-soft); font-size: 13px; }
+  footer .footer-links { margin-top: 12px; }
+  footer .footer-links a { color: var(--text-soft); font-weight: 400; margin: 0 8px; }
+
+  @media (max-width: 640px) {
+    header { padding: 18px 16px; }
+    .brand { font-size: 22px; }
+    main { padding: 10px 16px 30px; }
+    h1 { font-size: 28px; }
+  }
+  @media (max-width: 480px) { .block { padding: 18px; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="index.html">
+    <div class="brand-badge"><img src="assets/logo.jpg" alt="Acha Karo logo" /></div>
+    Acha Karo
+  </a>
+  <a class="nav-cta" href="index.html#download">Download</a>
+</header>
+
+<main>
+  <span class="eyebrow">🔒 Privacy</span>
+  <h1>Privacy <span>Policy</span></h1>
+  <p class="lead">This policy covers the Acha Karo app (Android and the iPhone/web app) and this website, achakaro.vercel.app. It explains what we collect, who can see it, and how to delete it.</p>
+  <p class="updated">Last updated: 30 September 2026</p>
+
+  <nav class="chips" aria-label="Sections">
+    <a href="#collect">What we collect</a>
+    <a href="#public">Who sees what</a>
+    <a href="#location">Location</a>
+    <a href="#storage">Storage</a>
+    <a href="#website">This website</a>
+    <a href="#delete">Deleting</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section class="block summary" aria-label="Short version">
+    <h2>The short version</h2>
+    <ul>
+      <li>Other users see only your <strong>first name and last initial</strong>, your city, points, badges and leaderboard rank.</li>
+      <li>Your acha kaam photos and locations are seen only by <strong>you and Acha Karo moderators</strong>.</li>
+      <li>No ads. No analytics or crash-reporting tools in the app. We never sell your data or share it with third parties.</li>
+      <li>You can delete your account at any time. We complete deletion <strong>within 30 days</strong>.</li>
+    </ul>
+  </section>
+
+  <section class="block" id="collect">
+    <h2>What we collect</h2>
+
+    <h3>Your account</h3>
+    <ul>
+      <li><strong>Email address.</strong> You log in with a one-time code sent to your email. We don't use passwords.</li>
+    </ul>
+
+    <h3>Your profile</h3>
+    <ul>
+      <li><strong>Name.</strong> Other users see only your first name and last initial (for example "Ayesha K."). A nickname is fine.</li>
+      <li><strong>City.</strong> Shown publicly next to your name.</li>
+      <li><strong>Gender and date of birth.</strong> Used to check you're 14 or older. Not shown to other users.</li>
+      <li><strong>Phone number (optional).</strong> Not shown to other users.</li>
+    </ul>
+
+    <h3>Your acha kaam</h3>
+    <ul>
+      <li><strong>A photo of each acha kaam.</strong> Kept in private storage, seen only by you and Acha Karo moderators. The app removes the photo's hidden details (metadata, including GPS) before it is uploaded.</li>
+      <li><strong>Details of each acha kaam:</strong> its type, the points it earned and its review status.</li>
+      <li><strong>Location (optional).</strong> See <a href="#location">Location</a> below.</li>
+    </ul>
+
+    <h3>Other things you send us</h3>
+    <ul>
+      <li><strong>Feedback</strong> you send from inside the app.</li>
+      <li><strong>Account deletion requests</strong>, including the reason if you give one.</li>
+      <li><strong>Friends and invites.</strong> If you use these features, we store who you've connected with and the invites you've sent or accepted.</li>
+    </ul>
+
+    <h3>What we don't collect</h3>
+    <p>We don't track your location in the background, read your contacts, show ads, or use advertising IDs. The app has no analytics or crash-reporting tools.</p>
+  </section>
+
+  <section class="block" id="public">
+    <h2>Who can see what</h2>
+    <ul>
+      <li><strong>Everyone using Acha Karo:</strong> your first name and last initial, city, points, badges and leaderboard rank.</li>
+      <li><strong>Only you and Acha Karo moderators:</strong> your acha kaam photos and their locations.</li>
+      <li><strong>Only the Acha Karo team:</strong> your email, phone number, gender and date of birth, feedback and deletion requests. We use them to run the app, check ages, review acha kaam and reply to you.</li>
+    </ul>
+    <p>We'll only post an acha kaam photo on social media if you give us permission first.</p>
+    <p>We don't sell your data, and we don't share it with third parties.</p>
+  </section>
+
+  <section class="block" id="location">
+    <h2>Location</h2>
+    <ul>
+      <li>Sharing your location is <strong>optional</strong>. The app asks you before each acha kaam.</li>
+      <li>If you agree, the app records an <strong>approximate location (about 100 metres)</strong> only at the moment you submit. It never tracks you in the background.</li>
+      <li>We use it to help check the acha kaam is real. Only you and Acha Karo moderators can see it.</li>
+    </ul>
+  </section>
+
+  <section class="block" id="storage">
+    <h2>How we store and protect it</h2>
+    <ul>
+      <li>Your data is stored with <strong>Supabase</strong>, a hosted database service, and is sent over encrypted connections (HTTPS).</li>
+      <li>Acha kaam photos are kept in private storage, not public links.</li>
+      <li>We keep your data while your account exists. When you delete your account, we delete it as described <a href="#delete">below</a>.</li>
+    </ul>
+
+    <h3>Fonts</h3>
+    <p>The app and this website load their fonts from <strong>Google Fonts</strong>. When the fonts load, Google can see your device's IP address, as with any website request. We don't send Google anything else.</p>
+  </section>
+
+  <section class="block" id="website">
+    <h2>This website</h2>
+    <ul>
+      <li><strong>Hosting.</strong> The website is hosted by <strong>Vercel</strong>. Like any web host, Vercel receives standard request information (such as your IP address and browser type) when you visit.</li>
+      <li><strong>Visit counts.</strong> Our home page uses <strong>Vercel Web Analytics</strong> to count page visits. It doesn't use cookies and doesn't identify you personally. This page, the Help page and the account deletion page don't use it.</li>
+      <li><strong>Live stats.</strong> The home page reads the total number of acha kaam from our database to show it. It sends nothing about you.</li>
+      <li><strong>Contact form.</strong> The form on our <a href="help.html#contact">Help page</a> sends your name, email and message to our Supabase database, where the Acha Karo team reads it. We use your details only to reply, keep messages for <strong>3 months</strong>, and never add you to a mailing list.</li>
+    </ul>
+    <p>The website doesn't set cookies or ask for your location.</p>
+  </section>
+
+  <section class="block" id="age">
+    <h2>Age</h2>
+    <p>Acha Karo is for people <strong>14 or older</strong>. If you're under 18, please use Acha Karo with a parent or guardian's knowledge. If we learn that an account belongs to someone under 14, we'll delete it.</p>
+  </section>
+
+  <section class="block" id="delete">
+    <h2>Deleting your account</h2>
+    <p>You can ask us to delete your account at any time:</p>
+    <ul>
+      <li><strong>In the app:</strong> Settings → <strong>Delete account</strong>.</li>
+      <li><strong>Without the app:</strong> follow the steps on our <a href="delete-account.html">account deletion page</a>.</li>
+    </ul>
+    <p>We complete deletion <strong>within 30 days</strong>. Your account, profile, acha kaam, photos, locations, points and badges are deleted, and you're removed from the leaderboard. The <a href="delete-account.html#kept">deletion page</a> lists the few things we may keep for a short time, and why.</p>
+    <p>To ask for a copy of your data, or to correct it, email us at the address below.</p>
+  </section>
+
+  <section class="block" id="changes">
+    <h2>Changes to this policy</h2>
+    <p>If we change this policy, we'll update this page and the "last updated" date at the top.</p>
+  </section>
+
+  <section class="block" id="contact">
+    <h2>Contact</h2>
+    <p>Questions about your privacy? Email <span class="ph">[PRIVACY CONTACT EMAIL]</span>.</p>
+  </section>
+</main>
+
+<footer>
+  <div>Made with ❤️ for a better Pakistan, one good deed at a time.</div>
+  <div style="margin-top: 12px; font-weight: 700; color: var(--gold);">@acha.karo.pk</div>
+  <div class="footer-links"><a href="index.html">Home</a> · <a href="help.html">Help &amp; Terms</a> · <a href="delete-account.html">Delete account</a></div>
+</footer>
+
+</body>
+</html>
