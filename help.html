@@ -309,7 +309,7 @@
       <div class="a"><p>Download the latest APK from our website and install it over the old one. Your account, points and badges are saved to your account, not your phone, so nothing is lost.</p></div>
     </details>
     <!-- Kept from 433661d (not in the v3.1 copy). Keywords added by Website Worker. -->
-    <details class="qa" id="verify" data-keywords="genuine, asli, verify, check, hash, sha, sha-256, sha256, fingerprint, virustotal, virus total, safe browsing, github, cert, certificate, signature, keytool, certutil, real, fake, nakli, original, safe, mehfooz, mahfooz, scam, trust, bharosa, hack">
+    <details class="qa" id="verify" data-keywords="genuine, asli, verify, check, hash, sha, sha-256, sha256, fingerprint, virustotal, virus total, safe browsing, github, cert, certificate, signature, keytool, apksigner, certutil, real, fake, nakli, original, safe, mehfooz, mahfooz, scam, trust, bharosa, hack">
       <summary>How can I check the app is genuine?</summary>
       <div class="a">
         <ul>
@@ -322,7 +322,7 @@
         <p>Easiest check: open the VirusTotal report above. It shows the same SHA-256 as ours.</p>
         <p><strong>For techies:</strong> SHA-256: <code>75a1ee759e40671a9aa8f300357bece9277c94ce4a6201adb450d14c0cbdeeac</code> · Signing cert: <code>1D:00:5D:8F:96:C5:D8:AA:90:32:9F:0E:75:25:F8:A0:50:8C:FC:E8:A3:39:C2:EA:F3:84:15:5C:55:56:DF:60</code></p>
         <p>To check the file, run <code>certutil -hashfile app-release.apk SHA256</code> on Windows or <code>shasum -a 256 app-release.apk</code> on Mac/Linux and compare the result with the SHA-256 above.</p>
-        <p>To check the signing cert, run <code>keytool -printcert -jarfile app-release.apk</code> and compare its SHA-256 fingerprint with the one above.</p>
+        <p>To check the signing cert, run <code>apksigner verify --print-certs app-release.apk</code> (it comes with the Android SDK build-tools) and compare its "certificate SHA-256 digest" with the one above (it prints it in lowercase without colons).</p>
       </div>
     </details>
   </section>
@@ -511,8 +511,7 @@
 
   <section class="block terms" id="terms">
     <h2>Terms of Use</h2>
-    <!-- SHIP-DAY: replace the marker below with the actual ship date before ANY push (Terms 9 promises an updated date). -->
-    <p class="updated">Last updated: <span class="ph">[SHIP DATE — set on the day v1.3.1 reaches users]</span></p>
+    <p class="updated">Last updated: 30 September 2026</p>
 
     <h3>1. What Acha Karo is</h3>
     <p>Acha Karo is a free app that encourages everyday acha kaam across Pakistan. You do an acha kaam, share a photo, earn points and badges, and see how your city is doing. By using the app or this website, you agree to these terms.</p>
