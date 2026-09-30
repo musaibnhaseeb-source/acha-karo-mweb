@@ -612,7 +612,8 @@
 
   // >>> VIRUSTOTAL REPORT LINK: leave '' until the FINAL v1.3 APK has been scanned AND shows
   // 0 detections. Setting it to the report URL shows the "Checked by 70+ antivirus engines" line.
-  var VIRUSTOTAL_REPORT_URL = 'https://www.virustotal.com/gui/file/c8ffa2bd929c7a4c0717296830d2a9f375347a8f2a743c9cfab8e2ceb9f036d3';
+  // v1.3.1: set to Musa's report URL before any push. Left '' so the line stays hidden if forgotten. [VT LINK v1.3.1]
+  var VIRUSTOTAL_REPORT_URL = '';
   if (VIRUSTOTAL_REPORT_URL) {
     document.getElementById('vt-link').href = VIRUSTOTAL_REPORT_URL;
     document.getElementById('vt-line').hidden = false;
