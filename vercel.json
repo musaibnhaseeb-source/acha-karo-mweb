@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/rules.html", "destination": "/", "permanent": false },
+    { "source": "/rules", "destination": "/", "permanent": false }
+  ]
+}
