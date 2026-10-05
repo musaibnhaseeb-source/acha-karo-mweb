@@ -3,7 +3,67 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Acha Karo — Do something good. Get seen for it.</title>
+<title>Acha Karo — Free app for acha kaam &amp; volunteering in Pakistan</title>
+<meta name="description" content="Do something good. Get seen for it. Acha Karo is a free app for everyday acha kaam and volunteering in Pakistan: feed a stray, clear litter, plant a sapling.">
+<link rel="canonical" href="https://achakaro.vercel.app/">
+<!-- >>> GOOGLE SEARCH CONSOLE: paste the token from Search Console (HTML tag method) into content="" and uncomment.
+<meta name="google-site-verification" content="PASTE_TOKEN_HERE">
+-->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Acha Karo">
+<meta property="og:locale" content="en_PK">
+<meta property="og:title" content="Acha Karo — Do something good. Get seen for it.">
+<meta property="og:description" content="Do acha kaam near you, in Lahore, Karachi, Islamabad or any city. Earn points and badges and climb the weekly board. Free, 14+.">
+<meta property="og:url" content="https://achakaro.vercel.app/">
+<meta property="og:image" content="https://achakaro.vercel.app/assets/logo.jpg">
+<meta property="og:image:width" content="2000">
+<meta property="og:image:height" content="2000">
+<meta property="og:image:alt" content="Acha Karo app icon">
+<meta name="twitter:card" content="summary">
+<!-- Organization + app details for search engines. Only facts that are already visible on the site. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://achakaro.vercel.app/#org",
+      "name": "Acha Karo",
+      "alternateName": ["AchaKaro", "اچھا کرو"],
+      "url": "https://achakaro.vercel.app/",
+      "logo": "https://achakaro.vercel.app/assets/logo.jpg",
+      "email": "achakaro.pk@gmail.com",
+      "areaServed": { "@type": "Country", "name": "Pakistan" },
+      "sameAs": [
+        "https://www.instagram.com/achakaro.pk",
+        "https://www.tiktok.com/@acha.karo.pk",
+        "https://youtube.com/@achakaropk"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://achakaro.vercel.app/#website",
+      "name": "Acha Karo",
+      "url": "https://achakaro.vercel.app/",
+      "publisher": { "@id": "https://achakaro.vercel.app/#org" },
+      "inLanguage": ["en", "ur"]
+    },
+    {
+      "@type": "MobileApplication",
+      "name": "Acha Karo",
+      "operatingSystem": "Android, iOS (web app)",
+      "applicationCategory": "LifestyleApplication",
+      "description": "A free app for doing acha kaam and community service in Pakistan: clear litter, feed a stray, plant a sapling, take a photo, and earn in-app points and badges. 14+.",
+      "url": "https://achakaro.vercel.app/",
+      "downloadUrl": "https://github.com/musaibnhaseeb-source/acha-karo-releases/releases/download/prod1/app-release.apk",
+      "installUrl": "https://acha-karo-pwa.vercel.app",
+      "image": "https://achakaro.vercel.app/assets/logo.jpg",
+      "publisher": { "@id": "https://achakaro.vercel.app/#org" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "PKR" }
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mirza:wght@400;500;700&display=swap" rel="stylesheet">
@@ -261,6 +321,22 @@
   .faq-card .go { font-size: 13px; font-weight: 700; color: var(--text); }
   .faq-more { text-align: center; margin-top: 22px; }
 
+  /* IDEAS + FOR GROUPS: plain visible copy cards */
+  .ideas-wrap { max-width: 820px; margin: 0 auto; display: grid; gap: 24px; }
+  .copy-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px 24px;
+  }
+  .copy-card h3 { font-size: 17px; margin: 0 0 8px; color: var(--gold); }
+  .copy-card p { font-size: 14px; line-height: 1.65; color: var(--text-soft); margin: 0 0 10px; }
+  .copy-card p:last-child { margin-bottom: 0; }
+  .copy-card a { color: var(--gold); font-weight: 700; }
+  .idea-list { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 4px 0 12px; }
+  .idea-list li {
+    font-size: 13.5px; color: var(--text); background: var(--card-strong);
+    border: 1px solid var(--line); border-radius: 100px; padding: 6px 12px;
+  }
+  .copy-card .ur { font-family: 'Mirza', serif; font-size: 18px; line-height: 1.9; text-align: right; }
+
   footer {
     text-align: center;
     padding: 40px 24px 50px;
@@ -431,6 +507,35 @@
   </ol>
 </section>
 
+<!-- 3b. IDEAS: real, visible copy for volunteering / acha kaam searches (no hidden text, see SEO notes) -->
+<section id="ideas">
+  <div class="section-head">
+    <h2>Volunteering &amp; acha kaam ideas across Pakistan</h2>
+    <p>Want to volunteer but don't know where to start? Start on your own street.</p>
+  </div>
+  <div class="ideas-wrap">
+    <div class="copy-card">
+      <h3>Acha kaam ideas you can do today</h3>
+      <ul class="idea-list">
+        <li>Clear litter</li>
+        <li>Feed a stray</li>
+        <li>Plant a sapling</li>
+        <li>Provide water for animals</li>
+        <li>Help someone cross the road</li>
+        <li>Share a meal</li>
+        <li>Visit the elderly</li>
+        <li>Teach a skill</li>
+      </ul>
+      <p>There are 32 kinds of acha kaam across 5 areas: environmental action, animal welfare, civic &amp; community, social &amp; human welfare, and health &amp; hygiene. It's community service and social work you can do whenever it suits you.</p>
+    </div>
+    <div class="copy-card">
+      <h3>Acha kaam in Lahore, Karachi, Islamabad, Faisalabad and every city</h3>
+      <p>Whether you're in Lahore, Karachi, Islamabad, Faisalabad, Rawalpindi, Multan, Peshawar, Quetta or a small town, Acha Karo works wherever you are. Students and young people are welcome from age 14; under 18, please join with a parent or guardian's knowledge.</p>
+      <p class="ur" dir="rtl" lang="ur">لاہور ہو یا کراچی، اسلام آباد ہو یا فیصل آباد — اچھا کام اور رضاکارانہ کام ہر شہر میں ہو سکتا ہے۔</p>
+    </div>
+  </div>
+</section>
+
 <!-- 4. MEET GUDDI (shortened) -->
 <section class="sticker-band" id="guddi">
   <div class="sticker-band-inner">
@@ -492,6 +597,18 @@
     </a>
   </div>
   <p class="faq-more"><a class="more-link" href="help.html">All questions → Help &amp; Terms</a></p>
+</section>
+
+<!-- 5b. FOR GROUPS: generic wording only. Don't name any organisation or imply a partnership. -->
+<section id="groups">
+  <div class="ideas-wrap">
+    <div class="copy-card">
+      <h3>For NGOs, schools, universities &amp; community groups</h3>
+      <p>NGOs, schools, universities and community groups can work with us. If you'd like your students, volunteers or members to do acha kaam together, we'd love to hear from you.</p>
+      <p><a href="help.html#contact">Click here to contact us →</a></p>
+      <p>Or email <a href="mailto:achakaro.pk@gmail.com?subject=Working%20with%20Acha%20Karo">achakaro.pk@gmail.com</a>.</p>
+    </div>
+  </div>
 </section>
 
 <!-- id="contact" kept here so old index.html#contact links still land on the contact link -->
