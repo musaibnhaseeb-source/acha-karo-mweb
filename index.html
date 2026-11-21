@@ -99,8 +99,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: 20px 24px;
-    max-width: 1080px;
+    padding: 20px 32px;
+    max-width: 1160px;
     margin: 0 auto;
   }
   .brand { display: flex; align-items: center; gap: 12px; font-weight: 900; font-size: 26px; color: var(--gold); text-decoration: none; flex-shrink: 0; }
@@ -115,14 +115,15 @@
   }
 
   /* HERO: restored from 5e97ea7 (same sizes, weights, spacing) */
-  .hero { position: relative; padding: 40px 24px 20px; max-width: 1080px; margin: 0 auto; }
+  .hero { position: relative; padding: 16px 32px 48px; max-width: 1160px; margin: 0 auto; min-height: min(calc(100svh - 84px), 800px); display: flex; align-items: center; }
   .hero-grid {
     position: relative;
     z-index: 2;
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 32px;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
     align-items: center;
+    width: 100%;
   }
   .eyebrow {
     display: inline-block;
@@ -155,28 +156,19 @@
   }
   .download-anchor { scroll-margin-top: 16px; }
 
-  .hero-mascot { position: relative; display: flex; justify-content: center; }
+  .hero-mascot { position: relative; display: flex; justify-content: center; align-items: center; }
+  .hero-mascot::before { /* soft warm glow behind Guddi so her face is the focal point */
+    content: ""; position: absolute; inset: 6% 0 0; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(224,178,61,0.20), rgba(224,178,61,0) 72%);
+    pointer-events: none;
+  }
   .hero-mascot img.main-visual {
-    /* trimmed WebP + padding = the same figure size and spacing as the old 460px-wide PNG (1080x1920 with transparent margins) */
-    width: 246px; height: auto; padding: 199px 110px 164px 104px; box-sizing: content-box;
-    filter: drop-shadow(0 24px 44px rgba(0,0,0,0.5));
+    position: relative; display: block;
+    height: min(74svh, 640px); width: auto; max-width: 100%; object-fit: contain;
+    /* the artwork is a bust cut off at the bottom edge: fade it out instead of a hard cut */
+    -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
   }
-  @keyframes bounce-icon {
-    0%, 100% { transform: translateY(0) rotate(-4deg); }
-    50% { transform: translateY(-14px) rotate(4deg); }
-  }
-  .floating-logo {
-    position: absolute;
-    top: -6%;
-    right: 8%;
-    width: 96px; height: 96px;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 16px 30px rgba(0,0,0,0.5), 0 0 0 4px rgba(224,178,61,0.35);
-    animation: bounce-icon 2.6s ease-in-out infinite;
-    z-index: 3;
-  }
-  .floating-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   /* shown only inside TikTok/Instagram/etc. in-app browsers, which can't install the APK */
   .inapp-notice {
@@ -205,7 +197,7 @@
   section { position: relative; z-index: 1; padding: 28px 24px; }
   .section-head { text-align: center; margin-bottom: 26px; }
   .section-head h2 { font-size: 30px; margin: 0 0 10px; }
-  .section-head p { color: var(--text-soft); font-size: 15px; margin: 0; }
+  .section-head p { color: var(--text-soft); font-size: 15px; margin: 0 auto; max-width: 640px; line-height: 1.6; }
 
   /* DOWNLOAD SURFACE: one calm block, no nested boxes */
   .get { padding-top: 12px; }
@@ -377,20 +369,61 @@
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .floating-logo { animation: none; }
     .sticky-bar { transition: none; }
   }
+
+  /* PARTNER: quiet tertiary hero button + enquiry modal (same table/payload as the Help contact form) */
+  .btn-tertiary {
+    background: transparent; color: var(--text-soft); font-weight: 700; font-size: 14px;
+    padding: 10px 26px; border: 1.5px solid rgba(246,245,236,0.22); border-radius: 100px; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  }
+  .btn-tertiary:hover, .btn-tertiary:focus-visible { color: var(--gold); border-color: rgba(224,178,61,0.6); }
+  .partner-dialog {
+    width: min(92vw, 460px); max-height: 90svh; overflow: auto; padding: 26px 24px 22px;
+    background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 22px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  }
+  .partner-dialog::backdrop { background: rgba(3,12,7,0.74); backdrop-filter: blur(3px); }
+  .partner-dialog h2 { font-size: 24px; margin: 0 28px 8px 0; }
+  .partner-dialog .pd-sub { font-size: 14px; line-height: 1.6; color: var(--text-soft); margin: 0 0 16px; }
+  .pd-close {
+    position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 50%;
+    background: transparent; border: 1.5px solid var(--line); color: var(--text-soft); font-size: 18px; line-height: 1; cursor: pointer;
+  }
+  .pd-close:hover, .pd-close:focus-visible { color: var(--gold); border-color: rgba(224,178,61,0.6); outline: none; }
+  .partner-form { display: grid; gap: 10px; }
+  .partner-form label { font-size: 13px; font-weight: 600; color: var(--text-soft); }
+  .partner-form input, .partner-form textarea {
+    width: 100%; font: inherit; font-size: 16px; color: var(--text); background: var(--bg); border: 1.5px solid var(--line);
+    border-radius: 12px; padding: 11px 14px; outline: none;
+  }
+  .partner-form textarea { resize: vertical; min-height: 96px; }
+  .partner-form input:focus, .partner-form textarea:focus { border-color: var(--gold); }
+  .partner-form .pd-send {
+    background: var(--gold); color: var(--ink-on-gold); border: 0; border-radius: 100px; padding: 13px 22px;
+    font: inherit; font-weight: 800; cursor: pointer; width: 100%;
+  }
+  .partner-form .pd-send:disabled { opacity: 0.7; cursor: default; }
+  .partner-form .pd-send:focus-visible, .pd-done:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+  .partner-form .fine { font-size: 12.5px; line-height: 1.55; color: var(--text-soft); margin: 2px 0 0; }
+  .partner-form .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .pd-status { font-size: 13px; margin: 0; color: #E39B84; }
+  .pd-success { text-align: center; padding: 14px 0 4px; }
+  .pd-success p { color: var(--text-soft); line-height: 1.6; margin: 0 0 16px; font-size: 14.5px; }
+  .pd-success strong { display: block; color: var(--mint); font-size: 18px; margin-bottom: 6px; }
+  .pd-done { background: var(--gold); color: var(--ink-on-gold); border: 0; border-radius: 100px; padding: 11px 28px; font: inherit; font-weight: 800; cursor: pointer; }
+  body.pd-lock { overflow: hidden; }
 
   /* same breakpoints as 5e97ea7 */
   @media (max-width: 860px) {
     h1 { font-size: 32px; }
-    .hero { padding: 24px 20px 10px; }
+    .hero { padding: 8px 20px 32px; min-height: 0; }
     .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 22px; }
     .hero p.lead { margin-left: auto; margin-right: auto; }
     .cta-row { align-items: center; }
-    .hero-mascot { order: -1; margin-bottom: 6px; }
-    .hero-mascot img.main-visual { width: 176px; padding: 143px 79px 118px 75px; }
-    .floating-logo { width: 68px; height: 68px; border-radius: 18px; top: -4%; right: 10%; }
+    .hero-mascot { order: -1; margin-bottom: 0; }
+    .hero-mascot img.main-visual { height: min(40svh, 340px); }
     .faq-grid { grid-template-columns: 1fr; gap: 24px; }
   }
   @media (max-width: 640px) {
@@ -400,11 +433,10 @@
     .header-right { gap: 12px; }
     .nav-cta { padding: 7px 14px; font-size: 12.5px; }
     /* phones: cap Guddi so the headline and button fit on the first screen */
-    .hero { padding: 8px 16px 8px; }
+    .hero { padding: 0 16px 24px; }
     .hero-grid { gap: 14px; }
     .hero-mascot { margin-bottom: 0; }
-    .hero-mascot img.main-visual { width: auto; height: 250px; padding: 0; }
-    .floating-logo { width: 56px; height: 56px; border-radius: 15px; top: 2%; right: 14%; }
+    .hero-mascot img.main-visual { height: min(34svh, 260px); }
     .eyebrow { margin-bottom: 12px; }
     h1 { margin-bottom: 12px; }
     .hero p.lead { font-size: 15.5px; margin-bottom: 18px; }
@@ -462,12 +494,15 @@
         <div class="cta-row">
           <a id="cta-primary" class="btn-primary" href="https://github.com/musaibnhaseeb-source/acha-karo-releases/releases/download/prod1/app-release.apk">⬇ Download for Android</a>
           <a id="cta-secondary" class="btn-ghost" href="https://acha-karo-pwa.vercel.app">🍎 Use on iPhone (Web app)</a>
+          <a id="partner-open" class="btn-tertiary" href="help.html#contact">Partner with us</a>
         </div>
       </div>
     </div>
     <div class="hero-mascot">
-      <div class="floating-logo"><img src="assets/logo-192.webp" width="96" height="96" alt="Acha Karo app icon" /></div>
-      <img class="main-visual" src="assets/guddi-hero-phone.webp" width="560" height="1037" alt="Guddi, the Acha Karo mascot, holding up the app" fetchpriority="high" />
+      <picture>
+        <source srcset="assets/guddi-hero.webp" type="image/webp" />
+        <img class="main-visual" src="assets/guddi-hero.png" width="880" height="1450" alt="Guddi, the Acha Karo mascot, holding up the app" fetchpriority="high" />
+      </picture>
     </div>
   </div>
 </section>
@@ -659,6 +694,35 @@
   <p class="not-affiliated">Acha Karo is not sponsored, endorsed or administered by, or associated with, Instagram, Meta, TikTok or Google.</p>
 </footer>
 
+<!-- Partner enquiry modal. Posts to the SAME table and payload as the Help contact form (website_contact_messages: name, email, message). -->
+<dialog class="partner-dialog" id="partner-dialog" aria-labelledby="pd-title">
+  <button type="button" class="pd-close" id="pd-close" aria-label="Close">✕</button>
+  <div id="pd-formwrap">
+    <h2 id="pd-title">Partner with us</h2>
+    <p class="pd-sub">Brand hain aur acha kaam ke saath judna chahte hain? Tell us a little about you. We're open to partnering with brands that care about acha kaam; nothing is promised or decided in advance, and we reply to every note personally.</p>
+    <form class="partner-form" id="partner-form" novalidate>
+      <label for="pd-name">Brand name</label>
+      <input id="pd-name" name="name" type="text" maxlength="100" required autocomplete="organization">
+      <label for="pd-email">Work email</label>
+      <input id="pd-email" name="email" type="email" maxlength="254" required autocomplete="email">
+      <label for="pd-msg">How would you like to partner?</label>
+      <textarea id="pd-msg" name="message" rows="4" maxlength="1800" required placeholder="Your idea in a few lines: a campaign, an acha kaam challenge, something else…"></textarea>
+      <!-- spam honeypot: hidden from people, bots fill it in. Never sent anywhere. -->
+      <div class="hp-field" aria-hidden="true">
+        <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+      </div>
+      <p id="pd-status" class="pd-status" role="alert" hidden></p>
+      <button class="pd-send" type="submit">Send enquiry</button>
+      <p class="fine">We only use your brand name and email to reply to you, and we keep messages for 3 months. We never add you to a mailing list or share your details.</p>
+    </form>
+  </div>
+  <div class="pd-success" id="pd-success" hidden>
+    <strong>Shukriya! 🌱</strong>
+    <p>Your note has reached us. We'll read it and reply to you by email.</p>
+    <button type="button" class="pd-done" id="pd-done">Close</button>
+  </div>
+</dialog>
+
 <!-- Mobile only: shown after the hero's download button scrolls away, hidden while it's on screen -->
 <nav class="sticky-bar" id="sticky-bar" aria-label="Quick links" aria-hidden="true">
   <a class="sb-download" href="#download" tabindex="-1">⬇ Download</a>
@@ -802,6 +866,95 @@
       // flow must never depend on this request succeeding.
     }
   })();
+})();
+</script>
+
+<script>
+// Partner enquiry modal. Same table, headers and payload shape as the Help page contact form
+// (website_contact_messages: name, email, message), so no schema or admin change is needed.
+// Partner notes are told apart by a "[Partner enquiry] Brand: ..." prefix at the start of `message`.
+(function () {
+  var SUPABASE_URL = 'https://kpajocmfrfkazaelbocw.supabase.co';
+  var SUPABASE_ANON_KEY = 'sb_publishable_xUOngckXVIPOIJ8vyOQtuQ_wtWD6Xec';
+  var dlg = document.getElementById('partner-dialog');
+  var opener = document.getElementById('partner-open');
+  if (!dlg || !opener || typeof dlg.showModal !== 'function') return; // old browser: the link goes to help.html#contact
+  var form = document.getElementById('partner-form');
+  var status = document.getElementById('pd-status');
+  var formWrap = document.getElementById('pd-formwrap');
+  var success = document.getElementById('pd-success');
+  var sendBtn = form.querySelector('.pd-send');
+  var lastFocus = null;
+
+  function open(e) {
+    e.preventDefault();
+    lastFocus = document.activeElement;
+    formWrap.hidden = false; success.hidden = true; status.hidden = true;
+    dlg.showModal();
+    document.body.classList.add('pd-lock');
+    document.getElementById('pd-name').focus();
+  }
+  function close() { if (dlg.open) dlg.close(); }
+  opener.addEventListener('click', open);
+  document.getElementById('pd-close').addEventListener('click', close);
+  document.getElementById('pd-done').addEventListener('click', close);
+  dlg.addEventListener('close', function () {
+    document.body.classList.remove('pd-lock');
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  });
+  // click on the backdrop (the dialog element itself, outside its box) closes
+  dlg.addEventListener('mousedown', function (e) {
+    if (e.target !== dlg) return;
+    var r = dlg.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close();
+  });
+  // focus trap: showModal keeps focus inside the dialog, this wraps Tab / Shift+Tab explicitly. Esc closes natively.
+  dlg.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab') return;
+    var f = Array.prototype.filter.call(dlg.querySelectorAll('button, input, textarea, a[href]'), function (el) {
+      return !el.disabled && el.tabIndex !== -1 && el.offsetParent !== null;
+    });
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  function showError(t) { status.textContent = t; status.hidden = false; }
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var data = new FormData(form);
+    if (data.get('website')) { formWrap.hidden = true; success.hidden = false; form.reset(); return; } // honeypot: pretend it worked
+    var name = String(data.get('name') || '').trim();
+    var email = String(data.get('email') || '').trim();
+    var msg = String(data.get('message') || '').trim();
+    if (!name || !msg || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please fill in all three fields, with a valid email.'); return; }
+    var payload = {
+      name: name,
+      email: email,
+      message: ('[Partner enquiry] Brand: ' + name + '\n\n' + msg).slice(0, 2000),
+    };
+    sendBtn.disabled = true; sendBtn.textContent = 'Sending…'; status.hidden = true;
+    try {
+      var res = await fetch(SUPABASE_URL + '/rest/v1/website_contact_messages', {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal',
+        },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error('Request failed');
+      form.reset(); formWrap.hidden = true; success.hidden = false;
+      document.getElementById('pd-done').focus();
+    } catch (err) {
+      showError("Couldn't send that — please try again in a moment.");
+    } finally {
+      sendBtn.disabled = false; sendBtn.textContent = 'Send enquiry';
+    }
+  });
 })();
 </script>
 
